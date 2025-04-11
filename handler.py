@@ -3,7 +3,9 @@ from link import *
 
 # Функции для обработки сообщений от бота
 def handle_message(message):
-    text = message["text"].lower()
+    text_raw = message["text"]
+    text = text_raw.lower()
+
 
     # Словарь команд
     command_handlers = {
@@ -21,7 +23,7 @@ def handle_message(message):
     # Проверяем, есть ли команда в словаре
     for command, handler in command_handlers.items():
         if text.startswith(command):
-            return handler(text)
+            return handler(text_raw)
     
     return "Я не понимаю эту команду."
 
