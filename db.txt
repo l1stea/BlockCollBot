@@ -102,3 +102,13 @@ mysql> DESCRIBE orders;
 +-------------+---------------+------+-----+---------+----------------+
 7 rows in set (0.01 sec)
 
+mysql> DESCRIBE suppliers;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| supplier_id   | int          | NO   | PRI | NULL    | auto_increment |
+| supplier_name | varchar(255) | YES  |     | NULL    |                |
+| contact_info  | text         | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+
+
