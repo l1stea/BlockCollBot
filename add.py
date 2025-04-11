@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from db import connect_db
 
 # Функции для добавления данных в таблицы
 def add_client(first_name, last_name, email, phone_number, address):
