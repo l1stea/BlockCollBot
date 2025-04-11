@@ -1,14 +1,113 @@
 import requests
 import config
 import time
+import mysql.connector
+from mysql.connector import Error
 
+# Глобальная переменная для таймаута
+timeout = 60
+
+# Функция для подключения к базе данных MySQL
+def connect_db():
+    try:
+        conn = mysql.connector.connect(
+            host=config.DB_CONFIG["host"],  # Используем параметры из config.py
+            user=config.DB_CONFIG["user"],
+            password=config.DB_CONFIG["password"],
+            database=config.DB_CONFIG["database"]
+        )
+        if conn.is_connected():
+            return conn
+    except Error as e:
+        print(f"Ошибка подключения к базе данных: {e}")
+        return None
+
+# Функция для создания таблиц, если они не существуют
+def create_tables():
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+
+        # Таблица пользователей
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            user_id INT PRIMARY KEY,
+            first_name VARCHAR(255),
+            username VARCHAR(255),
+            last_message TEXT
+        )
+        ''')
+
+        # Таблица продуктов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS products (
+            product_id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255),
+            category VARCHAR(255),
+            price DECIMAL(10, 2),
+            stock_quantity INT
+        )
+        ''')
+
+        # Таблица заказов
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS orders (
+            order_id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT,
+            product_id INT,
+            quantity INT,
+            status VARCHAR(50),
+            FOREIGN KEY(user_id) REFERENCES users(user_id),
+            FOREIGN KEY(product_id) REFERENCES products(product_id)
+        )
+        ''')
+
+        # Таблица для отслеживания количества товара на складе
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS stock (
+            product_id INT,
+            quantity INT,
+            PRIMARY KEY(product_id),
+            FOREIGN KEY(product_id) REFERENCES products(product_id)
+        )
+        ''')
+
+        conn.commit()
+        conn.close()
+
+# Функция для добавления или обновления пользователя в базе данных
+def add_or_update_user(user_id, first_name, username, last_message):
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+
+        # Проверим, существует ли пользователь
+        cursor.execute('SELECT * FROM users WHERE user_id = %s', (user_id,))
+        user = cursor.fetchone()
+
+        if user:
+            # Если пользователь уже существует, обновим его данные
+            cursor.execute('''
+            UPDATE users 
+            SET first_name = %s, username = %s, last_message = %s 
+            WHERE user_id = %s
+            ''', (first_name, username, last_message, user_id))
+        else:
+            # Если пользователя нет, добавим его
+            cursor.execute('''
+            INSERT INTO users (user_id, first_name, username, last_message) 
+            VALUES (%s, %s, %s, %s)
+            ''', (user_id, first_name, username, last_message))
+
+        conn.commit()
+        conn.close()
 
 # Функция для проверки работы бота
 def check_telegram_bot():
     url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/getMe"
     
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, timeout=timeout)
         response.raise_for_status()  # Поднимет исключение, если код ответа не 2xx
         data = response.json()
         
@@ -29,7 +128,7 @@ def send_message(chat_id, text):
     params = {"chat_id": chat_id, "text": text}
     
     try:
-        response = requests.get(url, params=params, timeout=30)
+        response = requests.get(url, params=params, timeout=timeout)
         response.raise_for_status()  # Поднимет исключение, если код ответа не 2xx
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при отправке сообщения: {e}")
@@ -51,7 +150,7 @@ def get_updates(offset=None):
     params = {"offset": offset, "timeout": 60}
     
     try:
-        response = requests.get(url, params=params, timeout=60)
+        response = requests.get(url, params=params, timeout=timeout)
         response.raise_for_status()
         updates = response.json()["result"]
         
@@ -79,4 +178,5 @@ def run_bot():
 
 if __name__ == "__main__":
     check_telegram_bot()  # Проверим работу бота
+    create_tables()  # Создадим таблицы, если их нет
     run_bot()  # Запускаем бота с постоянным опросом обновлений

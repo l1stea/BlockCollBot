@@ -1,0 +1,104 @@
+
+| assembly_components |
+| clients             |
+| component_suppliers |
+| components          |
+| computer_builds     |
+| employees           |
+| orders              |
+| suppliers  
+
+
+DESCRIBE assembly_components;
+DESCRIBE clients;
+DESCRIBE component_suppliers;
+DESCRIBE components;
+DESCRIBE computer_builds;
+DESCRIBE employees;
+DESCRIBE orders;
+DESCRIBE suppliers;
+
+mysql> DESCRIBE assembly_components;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| id           | int  | NO   | PRI | NULL    | auto_increment |
+| product_id   | int  | YES  | MUL | NULL    |                |
+| component_id | int  | YES  | MUL | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql> DESCRIBE clients;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| client_id    | int          | NO   | PRI | NULL    | auto_increment |
+| first_name   | varchar(100) | YES  |     | NULL    |                |
+| last_name    | varchar(100) | YES  |     | NULL    |                |
+| email        | varchar(100) | YES  |     | NULL    |                |
+| phone_number | varchar(15)  | YES  |     | NULL    |                |
+| address      | varchar(255) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.02 sec)
+
+mysql> DESCRIBE component_suppliers;
++--------------+------+------+-----+---------+----------------+
+| Field        | Type | Null | Key | Default | Extra          |
++--------------+------+------+-----+---------+----------------+
+| id           | int  | NO   | PRI | NULL    | auto_increment |
+| component_id | int  | YES  | MUL | NULL    |                |
+| supplier_id  | int  | YES  | MUL | NULL    |                |
++--------------+------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE components;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| component_id   | int           | NO   | PRI | NULL    | auto_increment |
+| product_name   | varchar(255)  | YES  |     | NULL    |                |
+| price          | decimal(10,2) | YES  |     | NULL    |                |
+| description    | text          | YES  |     | NULL    |                |
+| stock_quantity | int           | YES  |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE computer_builds;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| product_id     | int           | NO   | PRI | NULL    | auto_increment |
+| product_name   | varchar(255)  | YES  |     | NULL    |                |
+| description    | text          | YES  |     | NULL    |                |
+| price          | decimal(10,2) | YES  |     | NULL    |                |
+| stock_quantity | int           | YES  |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> DESCRIBE employees;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| employee_id | int           | NO   | PRI | NULL    | auto_increment |
+| first_name  | varchar(100)  | YES  |     | NULL    |                |
+| last_name   | varchar(100)  | YES  |     | NULL    |                |
+| position    | varchar(100)  | YES  |     | NULL    |                |
+| salary      | decimal(10,2) | YES  |     | NULL    |                |
+| hire_date   | date          | YES  |     | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE orders;
++-------------+---------------+------+-----+---------+----------------+
+| Field       | Type          | Null | Key | Default | Extra          |
++-------------+---------------+------+-----+---------+----------------+
+| order_id    | int           | NO   | PRI | NULL    | auto_increment |
+| client_id   | int           | YES  | MUL | NULL    |                |
+| product_id  | int           | YES  | MUL | NULL    |                |
+| sale_date   | date          | YES  |     | NULL    |                |
+| quantity    | int           | YES  |     | NULL    |                |
+| total_price | decimal(10,2) | YES  |     | NULL    |                |
+| employee_id | int           | YES  | MUL | NULL    |                |
++-------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
