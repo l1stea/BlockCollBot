@@ -31,8 +31,15 @@ def handle_message(message):
 # Обработчики команд
 def handle_add_client(text):
     try:
-        _, first_name, last_name, email, phone_number, address = text.split(",", 5)
+        # Сначала делим по первому пробелу
+        _, rest = text.split(" ", 1)
+        print(_)
+        print(rest)
+        # Теперь делим оставшееся по запятым
+        first_name, last_name, email, phone_number, address = rest.split(",", 4)
         add_client(first_name.strip(), last_name.strip(), email.strip(), phone_number.strip(), address.strip())
+        print(first_name.strip())
+        print(address.strip())
         return "Клиент добавлен!"
     except ValueError:
         return "Ошибка: команда должна быть в формате '/addclient <first_name>, <last_name>, <email>, <phone_number>, <address>'."
