@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
-from db import connect_db
+from CommandsDB.db import connect_db
 
 # Функции для связи данных
 def link_assembly_component(assembly_id, component_id):

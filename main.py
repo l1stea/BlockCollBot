@@ -1,8 +1,8 @@
 import requests
 import config
 import time
-from handler import handle_message
-from db import *
+from Handler.handler import handle_message
+from CommandsDB.db import *
 
 # Глобальная переменная для таймаута
 timeout = 60
