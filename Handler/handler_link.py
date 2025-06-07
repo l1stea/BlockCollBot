@@ -2,7 +2,10 @@ from CommandsDB.link import *
 
 def handle_link_assembly_component(text):
     try:
-        _, product_id, component_id = text.split(",", 2)
+        # Сначала делим по первому пробелу
+        _, rest = text.split(" ", 1)
+        # Теперь делим оставшееся по запятым
+        product_id, component_id = rest.split(",", 1)
         link_assembly_component(int(product_id.strip()), int(component_id.strip()))
         return "Сборка и комплектующий связаны!"
     except ValueError:
@@ -10,7 +13,10 @@ def handle_link_assembly_component(text):
 
 def handle_link_component_supplier(text):
     try:
-        _, component_id, supplier_id = text.split(",", 2)
+        # Сначала делим по первому пробелу
+        _, rest = text.split(" ", 1)
+        # Теперь делим оставшееся по запятым
+        component_id, supplier_id = rest.split(",", 1)
         link_component_supplier(int(component_id.strip()), int(supplier_id.strip()))
         return "Комплектующий и поставщик связаны!"
     except ValueError:

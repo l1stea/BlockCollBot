@@ -1,67 +1,68 @@
-from CommandsDB.search import *  # Импортируем функции для поиска
+from CommandsDB.search import *
 
-# Обработчики команд для поиска
-def handle_search_client(text):
+def handle_search(text, search_func, entity_label, format_result):
     try:
-        # Получаем данные после команды /searchclient
-        _, search_term = text.split(" ", 1)
-        response = search_client(search_term.strip())  # Вызов функции поиска клиента
-        if not response:
-            return "Клиент не найден."
-        return response
+        _, search_terms = text.split(" ", 1)
+        terms = [term.strip() for term in search_terms.split()]
+        all_results = []
+        for term in terms:
+            results = search_func(term)
+            all_results.extend(results)
+
+        # Убираем дубликаты (если один и тот же результат попал дважды)
+        unique_results = list({tuple(r) for r in all_results})
+
+        if not unique_results:
+            return f"{entity_label} не найден."
+
+        return "\n".join(format_result(*r) for r in unique_results)
     except ValueError:
-        return "Ошибка: команда должна быть в формате '/searchclient <search_term>'."
+        return f"Ошибка: команда должна быть в формате '/search{entity_label.lower()} <search_term>'."  
     except Exception as e:
         return f"Ошибка: {str(e)}"
+
+# Остальные обработчики остаются теми же:
+def handle_search_client(text):
+    return handle_search(
+        text,
+        search_client,
+        "Клиент",
+        lambda cid, fname, lname, email, phone, address:
+            f"{cid}: {fname} {lname}, {email}, {phone}, {address}"
+    )
 
 def handle_search_worker(text):
-    try:
-        # Получаем данные после команды /searchworker
-        _, search_term = text.split(" ", 1)
-        response = search_worker(search_term.strip())  # Вызов функции поиска работника
-        if not response:
-            return "Работник не найден."
-        return response
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/searchworker <search_term>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_search(
+        text,
+        search_worker,
+        "Работник",
+        lambda wid, fname, lname, pos, sal:
+            f"{wid}: {fname} {lname}, Должность: {pos}, Зарплата: {sal} руб."
+    )
 
 def handle_search_assembly(text):
-    try:
-        # Получаем данные после команды /searchassembly
-        _, search_term = text.split(" ", 1)
-        response = search_assembly(search_term.strip())  # Вызов функции поиска сборки
-        if not response:
-            return "Сборка не найдена."
-        return response
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/searchassembly <search_term>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_search(
+        text,
+        search_assembly,
+        "Сборка",
+        lambda aid, name, desc, price:
+            f"{aid}: Название: {name}, Описание: {desc}, Цена: {price} руб."
+    )
 
 def handle_search_component(text):
-    try:
-        # Получаем данные после команды /searchcomponent
-        _, search_term = text.split(" ", 1)
-        response = search_component(search_term.strip())  # Вызов функции поиска комплектующего
-        if not response:
-            return "Комплектующее не найдено."
-        return response
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/searchcomponent <search_term>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_search(
+        text,
+        search_component,
+        "Комплектующее",
+        lambda cid, name, type_, qty, price:
+            f"{cid}: {name}, Тип: {type_}, Кол-во: {qty}, Цена: {price} руб."
+    )
 
 def handle_search_supplier(text):
-    try:
-        # Получаем данные после команды /searchsupplier
-        _, search_term = text.split(" ", 1)
-        response = search_supplier(search_term.strip())  # Вызов функции поиска поставщика
-        if not response:
-            return "Поставщик не найден."
-        return response
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/searchsupplier <search_term>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_search(
+        text,
+        search_supplier,
+        "Поставщик",
+        lambda sid, name, email, phone, address:
+            f"{sid}: {name}, Email: {email}, Телефон: {phone}, Адрес: {address}"
+    )

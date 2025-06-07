@@ -1,73 +1,40 @@
 from CommandsDB.update import *  # Импортируем функции для обновления
 
-# Обработчики команд для обновления
-def handle_update_client(text):
+def handle_update(text, entity_name, update_func, entity_label):
     try:
-        # Получаем данные после команды /updateclient
-        _, client_id, field, new_value = text.split(" ", 3)
-        client_id = int(client_id.strip())  # Преобразуем ID в целое число
-        new_value = new_value.strip()  # Убираем лишние пробелы
-        response = update_client(client_id, field.strip(), new_value)
+        parts = text.strip().split()
+        if len(parts) < 4 or len(parts[2:]) % 2 != 0:
+            return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> <field> <value> [<field> <value> ...]'."
+
+        entity_id = int(parts[1])
+        updates = parts[2:]
+
+        field_dict = {
+            updates[i]: updates[i + 1] for i in range(0, len(updates), 2)
+        }
+
+        response = update_func(entity_id, **field_dict)
         if not response:
-            return "Ошибка: не удалось обновить клиента."
-        return "Клиент обновлен!"
+            return f"Ошибка: не удалось обновить {entity_label}."
+        
+        return f"{entity_label.capitalize()} обновлен!"
     except ValueError:
-        return "Ошибка: команда должна быть в формате '/updateclient <client_id> <field> <new_value>'."
+        return f"Ошибка: ID должен быть числом. Формат: '/update{entity_name} <id> <field> <value> ...'."
     except Exception as e:
         return f"Ошибка: {str(e)}"
+
+# Конкретные обработчики
+def handle_update_client(text):
+    return handle_update(text, "client", update_client, "клиент")
 
 def handle_update_worker(text):
-    try:
-        # Получаем данные после команды /updateworker
-        _, worker_id, field, new_value = text.split(" ", 3)
-        worker_id = int(worker_id.strip())  # Преобразуем ID в целое число
-        response = update_worker(worker_id, field.strip(), new_value.strip())
-        if not response:
-            return "Ошибка: не удалось обновить работника."
-        return "Работник обновлен!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/updateworker <worker_id> <field> <new_value>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_update(text, "worker", update_worker, "работник")
 
 def handle_update_assembly(text):
-    try:
-        # Получаем данные после команды /updateassembly
-        _, assembly_id, field, new_value = text.split(" ", 3)
-        assembly_id = int(assembly_id.strip())  # Преобразуем ID в целое число
-        response = update_assembly(assembly_id, field.strip(), new_value.strip())
-        if not response:
-            return "Ошибка: не удалось обновить сборку."
-        return "Сборка обновлена!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/updateassembly <assembly_id> <field> <new_value>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_update(text, "assembly", update_assembly, "сборка")
 
 def handle_update_component(text):
-    try:
-        # Получаем данные после команды /updatecomponent
-        _, component_id, field, new_value = text.split(" ", 3)
-        component_id = int(component_id.strip())  # Преобразуем ID в целое число
-        response = update_component(component_id, field.strip(), new_value.strip())
-        if not response:
-            return "Ошибка: не удалось обновить комплектующий."
-        return "Комплектующий обновлен!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/updatecomponent <component_id> <field> <new_value>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_update(text, "component", update_component, "комплектующий")
 
 def handle_update_supplier(text):
-    try:
-        # Получаем данные после команды /updatesupplier
-        _, supplier_id, field, new_value = text.split(" ", 3)
-        supplier_id = int(supplier_id.strip())  # Преобразуем ID в целое число
-        response = update_supplier(supplier_id, field.strip(), new_value.strip())
-        if not response:
-            return "Ошибка: не удалось обновить поставщика."
-        return "Поставщик обновлен!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/updatesupplier <supplier_id> <field> <new_value>'."
-    except Exception as e:
-        return f"Ошибка: {str(e)}"
+    return handle_update(text, "supplier", update_supplier, "поставщик")

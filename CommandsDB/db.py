@@ -23,6 +23,7 @@ def create_tables():
     if conn:
         cursor = conn.cursor()
 
+    try:
         # Таблица клиентов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS clients (
@@ -34,6 +35,14 @@ def create_tables():
             address TEXT
         )
         ''')
+        
+        # Таблица должностей
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS positions (
+            position_id INT AUTO_INCREMENT PRIMARY KEY,
+            position VARCHAR(255) NOT NULL UNIQUE
+        )
+        ''')
 
         # Таблица работников
         cursor.execute('''
@@ -41,9 +50,10 @@ def create_tables():
             employee_id INT AUTO_INCREMENT PRIMARY KEY,
             first_name VARCHAR(255),
             last_name VARCHAR(255),
-            position VARCHAR(255),
+            position_id INT,
             salary DECIMAL(10, 2),
-            hire_date DATE
+            hire_date DATE,
+            FOREIGN KEY (position_id) REFERENCES positions(position_id)
         )
         ''')
 
@@ -84,8 +94,8 @@ def create_tables():
             id INT AUTO_INCREMENT PRIMARY KEY,
             product_id int,
             component_id INT,
-            FOREIGN KEY(id) REFERENCES computer_builds(product_id),
-            FOREIGN KEY(product_id) REFERENCES computer_builds(product_id)
+            FOREIGN KEY(product_id) REFERENCES computer_builds(product_id),
+            FOREIGN KEY(component_id) REFERENCES components(component_id)
         )
         ''')
 
@@ -95,10 +105,16 @@ def create_tables():
             id INT AUTO_INCREMENT PRIMARY KEY,
             component_id INT,
             supplier_id INT,
+            supply_date DATE,
+            quantity_delivered INT,
             FOREIGN KEY(component_id) REFERENCES components(component_id),
             FOREIGN KEY(supplier_id) REFERENCES suppliers(supplier_id)
         )
         ''')
 
         conn.commit()
+    except Exception as e:
+        print(f"Ошибка при создании таблиц: {e}")
+    finally:
+        cursor.close()
         conn.close()
