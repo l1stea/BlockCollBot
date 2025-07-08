@@ -1,10 +1,10 @@
 # Пример структуры ролей и разрешённых команд
 ROLE_COMMANDS = {
     "admin": ["all"],
-    "seller": ["add_sale", "show_sales", "add_client", "show_clients", "find_client"],
-    "warehouse": ["add_supply", "show_supplies"],
-    "hr": ["add_employee", "show_employees", "edit_employee"],
-    "assembler": ["add_assembly", "show_assemblies"]
+    "seller": ["addsale", "addclient", "listclients", "searchclient"],
+    "warehouse": ["addsupply", "listsupplies"],
+    "hr": ["addemployee", "listemployees"],
+    "assembler": ["addassembly", "listassemblies"]
 }
 
 def get_user_role(chat_id):
@@ -14,11 +14,11 @@ def get_user_role(chat_id):
     """
     # Пример: словарь пользователей для теста
     users = {
-        123456789: "admin",
-        111111111: "seller",
-        222222222: "warehouse",
-        333333333: "hr",
-        444444444: "assembler"
+        # 222222222: "admin",
+        382814603: "seller",
+        # 222222222: "warehouse",
+        # 333333333: "hr",
+        # 444444444: "assembler"
     }
     return users.get(chat_id, None)
 
