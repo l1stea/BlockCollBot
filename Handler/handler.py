@@ -7,7 +7,11 @@ from Handler.handler_list import *
 
 # Функции для обработки сообщений от бота
 def handle_message(message):
-    text_raw = message["text"]
+    try:
+        text_raw = message["text"]
+    except:
+        return "Я не понимаю."
+    
     text = text_raw.lower()
 
     # Словарь команд
