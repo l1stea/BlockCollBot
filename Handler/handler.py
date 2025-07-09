@@ -37,6 +37,7 @@ def handle_message(message):
         "/addassembly": handle_add_assembly,
         "/addcomponent": handle_add_component,
         "/addsupplier": handle_add_supplier,
+        "/addsale": handle_add_sale,
 
         "/deleteclient": handle_delete_client,
         "/deleteworker": handle_delete_worker,
@@ -55,6 +56,7 @@ def handle_message(message):
         "/listassemblies": handle_list_assemblies,
         "/listcomponents": handle_list_components,
         "/listsuppliers": handle_list_suppliers,
+        "/listsales": handle_list_sales,
 
         "/searchclient": handle_search_client,
         "/searchworker": handle_search_worker,

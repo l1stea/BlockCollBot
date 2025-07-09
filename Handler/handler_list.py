@@ -69,3 +69,16 @@ def handle_list_suppliers(text):
         return response
     except Exception as e:
         return f"Ошибка: {str(e)}"
+    
+def handle_list_sales(text):
+    try:
+        sales = list_sales()
+        if not sales:
+            return "Нет продаж в базе данных."
+        response = "\n".join(
+            f"{sale_id}: Работник {employee_id}, Клиент {client_id}, Продукт {product_id}, Количество {quantity}, Дата {sale_date}"
+            for sale_id, employee_id, client_id, product_id, quantity, sale_date in sales
+        )
+        return response
+    except Exception as e:
+        return f"Ошибка: {str(e)}"

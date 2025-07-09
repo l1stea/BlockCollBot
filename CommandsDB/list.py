@@ -52,3 +52,12 @@ def list_suppliers():
         rows = cursor.fetchall()
         conn.close()
         return rows
+    
+def list_sales():
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT sale_id, employee_id, client_id, product_id, quantity, sale_date FROM sales")
+        rows = cursor.fetchall()
+        conn.close()
+        return rows

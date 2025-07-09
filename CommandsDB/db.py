@@ -112,6 +112,22 @@ def create_tables():
         )
         ''')
 
+        # Таблица продаж
+        cursor.execute('''
+        CREATE TABLE IF NOT EXISTS sales (
+            sale_id INT AUTO_INCREMENT PRIMARY KEY,
+            employee_id INT,
+            client_id INT,
+            product_id INT,
+            sale_date DATE,
+            quantity INT,
+            total_price DECIMAL(10, 2),
+            FOREIGN KEY(employee_id) REFERENCES employees(employee_id),
+            FOREIGN KEY(client_id) REFERENCES clients(client_id),
+            FOREIGN KEY(product_id) REFERENCES computer_builds(product_id)
+        )
+        ''')
+
         conn.commit()
     except Exception as e:
         print(f"Ошибка при создании таблиц: {e}")

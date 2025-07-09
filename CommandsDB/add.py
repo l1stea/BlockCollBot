@@ -61,3 +61,33 @@ def add_supplier(supplier_name, contact_info):
         ''', (supplier_name, contact_info))
         conn.commit()
         conn.close()
+
+import mysql.connector
+
+def add_sales(employee_id, client_id, product_id, quantity, sale_date, total_price):
+    conn = connect_db()
+    if conn:
+        try:
+            cursor = conn.cursor()
+            cursor.execute('''
+            INSERT INTO sales (employee_id, client_id, product_id, quantity, sale_date, total_price) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ''', (employee_id, client_id, product_id, quantity, sale_date, total_price))
+            conn.commit()
+        except mysql.connector.IntegrityError as e:
+            # Анализируем текст ошибки для определения поля
+            error_text = str(e)
+            if "FOREIGN KEY (`employee_id`" in error_text:
+                wrong_field = "employee_id"
+            elif "FOREIGN KEY (`client_id`" in error_text:
+                wrong_field = "client_id"
+            elif "FOREIGN KEY (`product_id`" in error_text:
+                wrong_field = "product_id"
+            else:
+                wrong_field = None
+            return False, wrong_field
+        except Exception as e:
+            return False, None
+        finally:
+            conn.close()
+        return True, None
