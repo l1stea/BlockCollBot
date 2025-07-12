@@ -5,6 +5,7 @@ from Handler.handler_delete import *
 from Handler.handler_search import *
 from Handler.handler_update import *
 from Handler.handler_list import *
+from Handler.handler_export import *
 from rbac import check_access
 
 # Функции для обработки сообщений от бота
@@ -32,6 +33,8 @@ def handle_message(message):
 
     # Словарь команд
     command_handlers = {
+        "/exportclients": handle_export_clients_to_excel,
+
         "/addclient": handle_add_client,
         "/addworker": handle_add_worker,
         "/addassembly": handle_add_assembly,

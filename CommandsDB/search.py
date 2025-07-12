@@ -2,19 +2,18 @@ import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
 
-# Функции для поиска данных в таблицах (по подстроке)
-def search_client(keywords):
+def universal_search(table, fields, keywords):
     try:
         connection = connect_db()
         cursor = connection.cursor()
-        query = "SELECT * FROM clients WHERE " + " AND ".join(
-            "(first_name LIKE %s OR last_name LIKE %s OR email LIKE %s OR phone_number LIKE %s OR address LIKE %s)"
+        query = f"SELECT * FROM {table} WHERE " + " AND ".join(
+            "(" + " OR ".join(f"{field} LIKE %s" for field in fields) + ")"
             for _ in keywords
         )
         params = []
         for kw in keywords:
             like_kw = f"%{kw}%"
-            params.extend([like_kw] * 5)
+            params.extend([like_kw] * len(fields))
         cursor.execute(query, params)
         return cursor.fetchall()
     except Error as e:
@@ -24,90 +23,18 @@ def search_client(keywords):
             cursor.close()
             connection.close()
 
+
+def search_client(keywords):
+    return universal_search("clients", ["first_name", "last_name", "email", "phone_number", "address"], keywords)
 
 def search_worker(keywords):
-    try:
-        connection = connect_db()
-        cursor = connection.cursor()
-        query = "SELECT * FROM workers WHERE " + " AND ".join(
-            "(first_name LIKE %s OR last_name LIKE %s OR position LIKE %s)"
-            for _ in keywords
-        )
-        params = []
-        for kw in keywords:
-            like_kw = f"%{kw}%"
-            params.extend([like_kw] * 3)
-        cursor.execute(query, params)
-        return cursor.fetchall()
-    except Error as e:
-        print(f"Ошибка: {e}")
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-
+    return universal_search("employees", ["first_name", "last_name", "position_id", "salary", "hire_date", "chat_id"], keywords)
 
 def search_assembly(keywords):
-    try:
-        connection = connect_db()
-        cursor = connection.cursor()
-        query = "SELECT * FROM assemblies WHERE " + " AND ".join(
-            "(name LIKE %s OR description LIKE %s)"
-            for _ in keywords
-        )
-        params = []
-        for kw in keywords:
-            like_kw = f"%{kw}%"
-            params.extend([like_kw] * 2)
-        cursor.execute(query, params)
-        return cursor.fetchall()
-    except Error as e:
-        print(f"Ошибка: {e}")
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-
+    return universal_search("assemblies", ["product_name", "description", "price", "stock_quantity"], keywords)
 
 def search_component(keywords):
-    try:
-        connection = connect_db()
-        cursor = connection.cursor()
-        query = "SELECT * FROM components WHERE " + " AND ".join(
-            "(name LIKE %s OR type LIKE %s)"
-            for _ in keywords
-        )
-        params = []
-        for kw in keywords:
-            like_kw = f"%{kw}%"
-            params.extend([like_kw] * 2)
-        cursor.execute(query, params)
-        return cursor.fetchall()
-    except Error as e:
-        print(f"Ошибка: {e}")
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-
+    return universal_search("components", ["product_name", "price", "description", "stock_quantity"], keywords)
 
 def search_supplier(keywords):
-    try:
-        connection = connect_db()
-        cursor = connection.cursor()
-        query = "SELECT * FROM suppliers WHERE " + " AND ".join(
-            "(name LIKE %s OR email LIKE %s OR phone LIKE %s OR address LIKE %s)"
-            for _ in keywords
-        )
-        params = []
-        for kw in keywords:
-            like_kw = f"%{kw}%"
-            params.extend([like_kw] * 4)
-        cursor.execute(query, params)
-        return cursor.fetchall()
-    except Error as e:
-        print(f"Ошибка: {e}")
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
+    return universal_search("suppliers", ["company_name", "contact_name", "contact_phone", "contact_email"], keywords)

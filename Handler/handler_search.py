@@ -26,7 +26,7 @@ def handle_search_client(text):
     return handle_search(
         text,
         search_client,
-        "Клиент",
+        "client",
         lambda cid, fname, lname, email, phone, address:
             f"{cid}: {fname} {lname}, {email}, {phone}, {address}"
     )
@@ -35,16 +35,16 @@ def handle_search_worker(text):
     return handle_search(
         text,
         search_worker,
-        "Работник",
-        lambda wid, fname, lname, pos, sal:
-            f"{wid}: {fname} {lname}, Должность: {pos}, Зарплата: {sal} руб."
+        "worker",
+        lambda wid, fname, lname, position_id, salary, hire_date, chat_id:
+            f"{wid}: {fname} {lname}, Должность ID: {position_id}, Зарплата: {salary} руб., Дата найма: {hire_date}, ChatID: {chat_id}"
     )
 
 def handle_search_assembly(text):
     return handle_search(
         text,
         search_assembly,
-        "Сборка",
+        "assembly",
         lambda aid, name, desc, price:
             f"{aid}: Название: {name}, Описание: {desc}, Цена: {price} руб."
     )
@@ -53,7 +53,7 @@ def handle_search_component(text):
     return handle_search(
         text,
         search_component,
-        "Комплектующее",
+        "component",
         lambda cid, name, type_, qty, price:
             f"{cid}: {name}, Тип: {type_}, Кол-во: {qty}, Цена: {price} руб."
     )
@@ -62,7 +62,7 @@ def handle_search_supplier(text):
     return handle_search(
         text,
         search_supplier,
-        "Поставщик",
+        "supplier",
         lambda sid, name, email, phone, address:
             f"{sid}: {name}, Email: {email}, Телефон: {phone}, Адрес: {address}"
     )

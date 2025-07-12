@@ -14,10 +14,12 @@ def handle_update(text, entity_name, update_func, entity_label):
         }
 
         response = update_func(entity_id, **field_dict)
-        if not response:
+        if response is True:
+            return f"{entity_label.capitalize()} обновлен!"
+        elif isinstance(response, str):
+            return f"Ошибка: {response}"
+        else:
             return f"Ошибка: не удалось обновить {entity_label}."
-        
-        return f"{entity_label.capitalize()} обновлен!"
     except ValueError:
         return f"Ошибка: ID должен быть числом. Формат: '/update{entity_name} <id> <field> <value> ...'."
     except Exception as e:

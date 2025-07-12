@@ -2,92 +2,72 @@ import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
 
-# Функции для добавления данных в таблицы
+def universal_add(table, fields, values, fk_map=None):
+    try:
+        conn = connect_db()
+        if conn:
+            cursor = conn.cursor()
+            query = f"INSERT INTO {table} ({', '.join(fields)}) VALUES ({', '.join(['%s'] * len(fields))})"
+            cursor.execute(query, tuple(values))
+            conn.commit()
+            conn.close()
+            return True, None
+    except mysql.connector.IntegrityError as e:
+        error_text = str(e)
+        if fk_map:
+            for fk_field, fk_text in fk_map.items():
+                if fk_text in error_text:
+                    return False, fk_field
+        return False, str(e)
+    except Exception as e:
+        return False, str(e)
+    return False, None
+
 def add_client(first_name, last_name, email, phone_number, address):
-    conn = connect_db()
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute(''' 
-        INSERT INTO clients (first_name, last_name, email, phone_number, address) 
-        VALUES (%s, %s, %s, %s, %s)
-        ''', (first_name, last_name, email, phone_number, address))
-        conn.commit()
-        conn.close()
+    # Можно добавить проверки здесь, если нужно
+    return universal_add(
+        "clients",
+        ["first_name", "last_name", "email", "phone_number", "address"],
+        [first_name, last_name, email, phone_number, address]
+    )
 
-
-def add_worker(first_name, last_name, position, salary, hire_date):
-    conn = connect_db()
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-        INSERT INTO employees (first_name, last_name, position, salary, hire_date) 
-        VALUES (%s, %s, %s, %s, %s)
-        ''', (first_name, last_name, position, salary, hire_date))
-        conn.commit()
-        conn.close()
-
+def add_worker(first_name, last_name, position_id, salary, hire_date, chat_id=None):
+    return universal_add(
+        "employees",
+        ["first_name", "last_name", "position_id", "salary", "hire_date", "chat_id"],
+        [first_name, last_name, position_id, salary, hire_date, chat_id],
+        fk_map={"position_id": "FOREIGN KEY (`position_id`"}
+    )
 
 def add_assembly(product_name, product_description, price, stock_quantity):
-    conn = connect_db()
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-        INSERT INTO computer_builds (product_name, product_description, price, stock_quantity) 
-        VALUES (%s, %s, %s, %s)
-        ''', (product_name, product_description, price, stock_quantity))
-        conn.commit()
-        conn.close()
-
+    return universal_add(
+        "computer_builds",
+        ["product_name", "product_description", "price", "stock_quantity"],
+        [product_name, product_description, price, stock_quantity]
+    )
 
 def add_component(product_name, price, description, stock_quantity):
-    conn = connect_db()
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-        INSERT INTO components (product_name, price, description, stock_quantity) 
-        VALUES (%s, %s, %s, %s)
-        ''', (product_name, price, description, stock_quantity))
-        conn.commit()
-        conn.close()
+    return universal_add(
+        "components",
+        ["product_name", "price", "description", "stock_quantity"],
+        [product_name, price, description, stock_quantity]
+    )
 
-
-def add_supplier(supplier_name, contact_info):
-    conn = connect_db()
-    if conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-        INSERT INTO suppliers (supplier_name, contact_info) 
-        VALUES (%s, %s)
-        ''', (supplier_name, contact_info))
-        conn.commit()
-        conn.close()
-
-import mysql.connector
+def add_supplier(company_name, contact_name, contact_phone, contact_email):
+    return universal_add(
+        "suppliers",
+        ["company_name", "contact_name", "contact_phone", "contact_email"],
+        [company_name, contact_name, contact_phone, contact_email]
+    )
 
 def add_sales(employee_id, client_id, product_id, quantity, sale_date, total_price):
-    conn = connect_db()
-    if conn:
-        try:
-            cursor = conn.cursor()
-            cursor.execute('''
-            INSERT INTO sales (employee_id, client_id, product_id, quantity, sale_date, total_price) 
-            VALUES (%s, %s, %s, %s, %s, %s)
-            ''', (employee_id, client_id, product_id, quantity, sale_date, total_price))
-            conn.commit()
-        except mysql.connector.IntegrityError as e:
-            # Анализируем текст ошибки для определения поля
-            error_text = str(e)
-            if "FOREIGN KEY (`employee_id`" in error_text:
-                wrong_field = "employee_id"
-            elif "FOREIGN KEY (`client_id`" in error_text:
-                wrong_field = "client_id"
-            elif "FOREIGN KEY (`product_id`" in error_text:
-                wrong_field = "product_id"
-            else:
-                wrong_field = None
-            return False, wrong_field
-        except Exception as e:
-            return False, None
-        finally:
-            conn.close()
-        return True, None
+    return universal_add(
+        "sales",
+        ["employee_id", "client_id", "product_id", "quantity", "sale_date", "total_price"],
+        [employee_id, client_id, product_id, quantity, sale_date, total_price],
+        fk_map={
+            "employee_id": "FOREIGN KEY (`employee_id`",
+            "client_id": "FOREIGN KEY (`client_id`",
+            "product_id": "FOREIGN KEY (`product_id`"
+        }
+    )
