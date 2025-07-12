@@ -1,6 +1,6 @@
 import time
-from CommandsDB.db import *
-from Https.https import get_updates
+from TelegramApi.telegram_api import get_updates
+from CommandsDB.db import create_tables
 
 def run_bot():
     print("Бот запущен.")
