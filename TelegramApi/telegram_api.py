@@ -78,6 +78,9 @@ def get_updates(offset=None):
                     send_message(chat_id, response_text)
                 offset = update["update_id"] + 1
         return offset
+    except requests.exceptions.Timeout:
+        # logging.warning("Telegram API не ответил за отведенное время.")
+        return offset  # Продолжаем с тем же offset
     except requests.exceptions.RequestException as e:
         logging.error(f"Ошибка при получении обновлений: {e}")
         return offset
