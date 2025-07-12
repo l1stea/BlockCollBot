@@ -14,6 +14,6 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 POLL_INTERVAL = 1
 LOG_LEVEL = "INFO"
-TIMEOUT = 60 # Timeout for requests in seconds
+
 TELEGRAM_API_TIMEOUT = 60  # seconds for long polling
 HTTP_REQUEST_TIMEOUT = 10  # seconds for HTTP requests

@@ -19,7 +19,7 @@ def send_message(chat_id, text, page=0, page_size=10):
     if reply_markup:
         params["reply_markup"] = json.dumps(reply_markup)
     try:
-        response = requests.get(url, params=params, timeout=config.TIMEOUT)
+        response = requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
         response.raise_for_status()
         message_id = response.json().get("result", {}).get("message_id")
         if message_id:
@@ -40,7 +40,7 @@ def send_document(chat_id, file_path, caption=None):
         if caption:
             data["caption"] = caption
         try:
-            response = requests.post(url, data=data, files=files, timeout=config.TIMEOUT)
+            response = requests.post(url, data=data, files=files, timeout=config.HTTP_REQUEST_TIMEOUT)
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
             logging.error(f"Ошибка при отправке файла: {e}")

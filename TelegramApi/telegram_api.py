@@ -19,7 +19,7 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
             "text": "Данные устарели. Пожалуйста, запросите список заново."
         }
         try:
-            requests.get(url, params=params, timeout=config.TIMEOUT)
+            requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
         except requests.exceptions.RequestException as e:
             logging.error(f"Ошибка при редактировании сообщения: {e}")
         return
@@ -38,7 +38,7 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
     if reply_markup:
         params["reply_markup"] = json.dumps(reply_markup)
     try:
-        requests.get(url, params=params, timeout=config.TIMEOUT)
+        requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
         PAGINATED_TEXTS[chat_id][message_id]["page_size"] = page_size
         PAGINATED_TIMESTAMPS[(chat_id, message_id)] = time.time()
     except requests.exceptions.RequestException as e:
@@ -89,6 +89,6 @@ def notify_admin(text):
     for chat_id in admin_chat_ids:
         params = {"chat_id": chat_id, "text": text}
         try:
-            requests.get(url, params=params, timeout=config.TIMEOUT)
+            requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
         except Exception as e:
             logging.error(f"Ошибка при отправке уведомления админу: {e}")
