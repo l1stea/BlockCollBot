@@ -3,6 +3,7 @@ import logging
 import requests
 import config
 import time
+import json
 from TelegramApi.pagination import PAGINATED_TEXTS, PAGINATED_TIMESTAMPS, get_paginated_pages, build_reply_markup
 
 def send_message(chat_id, text, page=0, page_size=10):
@@ -16,7 +17,6 @@ def send_message(chat_id, text, page=0, page_size=10):
         "text": pages[page] if total_pages > 0 else ""
     }
     if reply_markup:
-        import json
         params["reply_markup"] = json.dumps(reply_markup)
     try:
         response = requests.get(url, params=params, timeout=config.TIMEOUT)

@@ -2,6 +2,7 @@ import requests
 import config
 import time
 import logging
+import json
 from TelegramApi.pagination import PAGINATED_TEXTS, PAGINATED_TIMESTAMPS, get_paginated_pages, build_reply_markup
 from Handler.handler import handle_message
 from TelegramApi.export import handle_export
@@ -35,7 +36,6 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
         "text": pages[page] if total_pages > 0 else ""
     }
     if reply_markup:
-        import json
         params["reply_markup"] = json.dumps(reply_markup)
     try:
         requests.get(url, params=params, timeout=config.TIMEOUT)
@@ -47,9 +47,9 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
 
 def get_updates(offset=None):
     url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/getUpdates"
-    params = {"offset": offset, "timeout": config.TIMEOUT}
+    params = {"offset": offset, "timeout": config.TELEGRAM_API_TIMEOUT}
     try:
-        response = requests.get(url, params=params, timeout=config.TIMEOUT)
+        response = requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
         response.raise_for_status()
         updates = response.json()["result"]
         for update in updates:
