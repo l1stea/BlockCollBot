@@ -1,7 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
-import pymysql
 from Logging.bot_logging import *
 from config import DB_CONFIG
 
@@ -31,9 +30,9 @@ def get_admin_chat_id_from_db():
 
     :return: int или None — chat_id администратора или None, если не найдено
     """
-    connection = pymysql.connect(**DB_CONFIG)
+    conn = connect_db()
     try:
-        with connection.cursor() as cursor:
+        with conn.cursor() as cursor:
             cursor.execute("""
                 SELECT c.chat_id
                 FROM employees c
@@ -46,11 +45,11 @@ def get_admin_chat_id_from_db():
                 return int(result[0])
             else:
                 return None
-    except pymysql.MySQLError as e:
+    except mysql.connector.Error as e:
         logging.error(f"Ошибка при получении chat_id администратора: {e}")
         return None
     finally:
-        connection.close()
+        conn.close()
 
 def get_all_admin_chat_ids_from_db():
     """
@@ -58,9 +57,9 @@ def get_all_admin_chat_ids_from_db():
 
     :return: list[int] — список chat_id администраторов
     """
-    connection = pymysql.connect(**DB_CONFIG)
+    conn = connect_db()
     try:
-        with connection.cursor() as cursor:
+        with conn.cursor() as cursor:
             cursor.execute("""
                 SELECT c.chat_id
                 FROM employees c
@@ -69,8 +68,8 @@ def get_all_admin_chat_ids_from_db():
             """)
             results = cursor.fetchall()
             return [int(row[0]) for row in results]
-    except pymysql.MySQLError as e:
+    except mysql.connector.Error as e:
         logging.error(f"Ошибка при получении chat_id администратора: {e}")
         return None
     finally:
-        connection.close()
+        conn.close()
