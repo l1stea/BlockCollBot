@@ -1,5 +1,7 @@
 from CommandsDB.link import *
+from Handler.commands import *
 
+@command("/linkassemblycomponent")
 def handle_link_assembly_component(text):
     try:
         # Сначала делим по первому пробелу
@@ -11,6 +13,7 @@ def handle_link_assembly_component(text):
     except ValueError:
         return "Ошибка: команда должна быть в формате '/linkassemblycomponent <product_id>, <component_id>'."
 
+@command("/linkcomponentsupplier")
 def handle_link_component_supplier(text):
     try:
         # Сначала делим по первому пробелу

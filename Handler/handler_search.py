@@ -1,5 +1,7 @@
 from CommandsDB.search import *
+from Handler.commands import *
 
+# Обработчик для поиска по базе данных
 def handle_search(text, search_func, entity_label, format_result):
     try:
         _, search_terms = text.split(" ", 1)
@@ -22,6 +24,7 @@ def handle_search(text, search_func, entity_label, format_result):
         return f"Ошибка: {str(e)}"
 
 # Остальные обработчики остаются теми же:
+@command("/searchclient")
 def handle_search_client(text):
     return handle_search(
         text,
@@ -31,6 +34,8 @@ def handle_search_client(text):
             f"{cid}: {fname} {lname}, {email}, {phone}, {address}"
     )
 
+# Обработчик для поиска работников
+@command("/searchworker")
 def handle_search_worker(text):
     return handle_search(
         text,
@@ -40,6 +45,8 @@ def handle_search_worker(text):
             f"{wid}: {fname} {lname}, Должность ID: {position_id}, Зарплата: {salary} руб., Дата найма: {hire_date}, ChatID: {chat_id}"
     )
 
+# Обработчик для поиска сборок
+@command("/searchassembly")
 def handle_search_assembly(text):
     return handle_search(
         text,
@@ -49,6 +56,8 @@ def handle_search_assembly(text):
             f"{aid}: Название: {name}, Описание: {desc}, Цена: {price} руб."
     )
 
+# Обработчик для поиска комплектующих
+@command("/searchcomponent")
 def handle_search_component(text):
     return handle_search(
         text,
@@ -58,6 +67,8 @@ def handle_search_component(text):
             f"{cid}: {name}, Тип: {type_}, Кол-во: {qty}, Цена: {price} руб."
     )
 
+# Обработчик для поиска поставщиков
+@command("/searchsupplier")
 def handle_search_supplier(text):
     return handle_search(
         text,

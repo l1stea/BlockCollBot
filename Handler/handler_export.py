@@ -1,5 +1,7 @@
 import pandas as pd
+from Handler.commands import command
 
+@command("/exportclients")
 def handle_export_clients_to_excel(file_path="clients.xlsx"):
     file_path = file_path.replace("/export", "").replace("export", "")
     if not file_path.lower().endswith(".xlsx"):

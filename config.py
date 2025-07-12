@@ -14,3 +14,4 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
 POLL_INTERVAL = 1
 LOG_LEVEL = "INFO"
+TIMEOUT = 60 # Timeout for requests in seconds

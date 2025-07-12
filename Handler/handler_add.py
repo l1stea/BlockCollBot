@@ -1,5 +1,6 @@
 from CommandsDB.add import *
 from Converter.converter import to_mysql_date
+from Handler.commands import *
 
 def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
     try:
@@ -26,6 +27,7 @@ def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
     except Exception as e:
         return f"Ошибка при добавлении: {e}"
 
+@command("/addclient")
 def handle_add_client(text):
     return handle_add(
         text,
@@ -35,6 +37,7 @@ def handle_add_client(text):
         add_client
     )
 
+@command("/addworker")
 def handle_add_worker(text):
     return handle_add(
         text,
@@ -44,6 +47,7 @@ def handle_add_worker(text):
         add_worker
     )
 
+@command("/addassembly")
 def handle_add_assembly(text):
     return handle_add(
         text,
@@ -53,6 +57,7 @@ def handle_add_assembly(text):
         add_assembly
     )
 
+@command("/addcomponent")
 def handle_add_component(text):
     return handle_add(
         text,
@@ -62,6 +67,7 @@ def handle_add_component(text):
         add_component
     )
 
+@command("/addsupplier")
 def handle_add_supplier(text):
     return handle_add(
         text,
@@ -71,6 +77,7 @@ def handle_add_supplier(text):
         add_supplier
     )
 
+@command("/addsale")
 def handle_add_sale(text):
     return handle_add(
         text,

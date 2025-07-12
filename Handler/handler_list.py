@@ -1,6 +1,8 @@
 from CommandsDB.list import *  # Импортируем функции для списка
+from Handler.commands import *
 
 # Обработчики команд для вывода списка
+@command("/listclients")
 def handle_list_clients(text):
     try:
         clients = list_clients()
@@ -14,7 +16,7 @@ def handle_list_clients(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-
+@command("/listworkers")
 def handle_list_workers(text):
     try:
         workers = list_workers()
@@ -28,7 +30,7 @@ def handle_list_workers(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-
+@command("/listassemblies")
 def handle_list_assemblies(text):
     try:
         assemblies = list_assemblies()
@@ -42,7 +44,7 @@ def handle_list_assemblies(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-
+@command("/listcomponents")
 def handle_list_components(text):
     try:
         components = list_components()
@@ -56,7 +58,7 @@ def handle_list_components(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-
+@command("/listsuppliers")
 def handle_list_suppliers(text):
     try:
         suppliers = list_suppliers()
@@ -70,6 +72,7 @@ def handle_list_suppliers(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
     
+@command("/listsales")  
 def handle_list_sales(text):
     try:
         sales = list_sales()

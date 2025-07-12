@@ -1,5 +1,7 @@
 from CommandsDB.delete import *
+from Handler.commands import *
 
+@command("/deleteclient")
 def handle_delete_client(text):
     try:
         _, client_id = text.split(" ", 1)
@@ -8,6 +10,7 @@ def handle_delete_client(text):
     except ValueError:
         return "Ошибка: команда должна быть в формате '/deleteclient <id>'."
 
+@command("/deleteworker")
 def handle_delete_worker(text):
     try:
         _, worker_id = text.split(" ", 1)
@@ -16,6 +19,7 @@ def handle_delete_worker(text):
     except ValueError:
         return "Ошибка: команда должна быть в формате '/deleteworker <id>'."
 
+@command("/deleteassembly")
 def handle_delete_assembly(text):
     try:
         _, assembly_id = text.split(" ", 1)
@@ -24,6 +28,7 @@ def handle_delete_assembly(text):
     except ValueError:
         return "Ошибка: команда должна быть в формате '/deleteassembly <id>'."
 
+@command("/deletecomponent")
 def handle_delete_component(text):
     try:
         _, component_id = text.split(" ", 1)
@@ -32,6 +37,7 @@ def handle_delete_component(text):
     except ValueError:
         return "Ошибка: команда должна быть в формате '/deletecomponent <id>'."
 
+@command("/deletesupplier")
 def handle_delete_supplier(text):
     try:
         _, supplier_id = text.split(" ", 1)
