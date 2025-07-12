@@ -30,3 +30,5 @@ if __name__ == "__main__":
             from TelegramApi.telegram_api import notify_admin
             notify_admin(f"Бот упал с ошибкой: {e}. Перезапуск через 5 секунд.")
             time.sleep(5)
+
+#test
