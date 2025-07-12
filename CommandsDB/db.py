@@ -1,3 +1,4 @@
+from Logging.bot_logging import logging
 import config
 import mysql.connector
 from mysql.connector import Error
@@ -13,7 +14,7 @@ def connect_db():
         if conn.is_connected():
             return conn
     except Error as e:
-        print(f"Ошибка подключения к базе данных: {e}")
+        logging.error(f"Ошибка подключения к базе данных: {e}")
         return None
 
 TABLES_SQL = [
@@ -108,7 +109,7 @@ def create_tables():
                 cursor.execute(sql)
             conn.commit()
         except Exception as e:
-            print(f"Ошибка при создании таблиц: {e}")
+            logging.error(f"Ошибка при создании таблиц: {e}")
         finally:
             cursor.close()
             conn.close()

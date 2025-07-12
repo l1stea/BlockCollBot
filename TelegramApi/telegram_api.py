@@ -33,7 +33,7 @@ def send_message(chat_id, text, page=0, page_size=10):
             PAGINATED_TIMESTAMPS[(chat_id, message_id)] = time.time()
         return message_id
     except requests.exceptions.RequestException as e:
-        print(f"Ошибка при отправке сообщения: {e}")
+        logging.error(f"Ошибка при отправке сообщения: {e}")
         return None
 
 def edit_message(chat_id, message_id, page=0, page_size=None):
@@ -49,7 +49,7 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
         try:
             requests.get(url, params=params, timeout=timeout)
         except requests.exceptions.RequestException as e:
-            print(f"Ошибка при редактировании сообщения: {e}")
+            logging.error(f"Ошибка при редактировании сообщения: {e}")
         return
     text = msg_data["text"]
     page_size = page_size if page_size else msg_data["page_size"]
@@ -71,7 +71,7 @@ def edit_message(chat_id, message_id, page=0, page_size=None):
         PAGINATED_TEXTS[chat_id][message_id]["page_size"] = page_size
         PAGINATED_TIMESTAMPS[(chat_id, message_id)] = time.time()
     except requests.exceptions.RequestException as e:
-        print(f"Ошибка при редактировании сообщения: {e}")
+        logging.error(f"Ошибка при редактировании сообщения: {e}")
 
 def send_document(chat_id, file_path, caption=None):
     url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/sendDocument"
@@ -84,11 +84,11 @@ def send_document(chat_id, file_path, caption=None):
             response = requests.post(url, data=data, files=files, timeout=timeout)
             response.raise_for_status()
         except requests.exceptions.RequestException as e:
-            print(f"Ошибка при отправке файла: {e}")
+            logging.error(f"Ошибка при отправке файла: {e}")
     try:
         os.remove(file_path)
     except Exception as e:
-        print(f"Ошибка при удалении файла: {e}")
+        logging.error(f"Ошибка при удалении файла: {e}")
 
 def get_updates(offset=None):
     url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/getUpdates"
@@ -124,7 +124,7 @@ def get_updates(offset=None):
                 offset = update["update_id"] + 1
         return offset
     except requests.exceptions.RequestException as e:
-        print(f"Ошибка при получении обновлений: {e}")
+        logging.error(f"Ошибка при получении обновлений: {e}")
         return offset
     
 def handle_export(chat_id, text):

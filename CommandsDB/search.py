@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
+from Logging.bot_logging import logging
 
 def universal_search(table, fields, keywords):
     try:
@@ -17,7 +18,7 @@ def universal_search(table, fields, keywords):
         cursor.execute(query, params)
         return cursor.fetchall()
     except Error as e:
-        print(f"Ошибка: {e}")
+        logging.error(f"Ошибка: {e}")
     finally:
         if connection.is_connected():
             cursor.close()

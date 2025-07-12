@@ -6,5 +6,5 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s",
     filename="bot.log",
     filemode="a",
-    encoding="utf-8"   # <-- добавьте эту строку
+    encoding="utf-8"
 )
