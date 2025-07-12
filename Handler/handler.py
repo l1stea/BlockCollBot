@@ -17,6 +17,10 @@ def handle_message(message):
         # Проверка: если текст не начинается с '/', это не команда
         if not text_raw.startswith("/"):
             return "Пожалуйста, используйте команды, начинающиеся с '/'. Например: /help"
+        
+        # Команда chat_id
+        if text_raw.strip().lower() == "/chat_id":
+            return f"Ваш chat_id: {chat_id}"
 
         # Определяем команду (например, /add_client -> add_client)
         command = text_raw.split()[0].lstrip("/")

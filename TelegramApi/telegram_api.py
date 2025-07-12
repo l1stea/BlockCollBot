@@ -2,6 +2,7 @@ import os
 import requests
 import config
 import time
+import logging
 from TelegramApi.pagination import PAGINATED_TEXTS, PAGINATED_TIMESTAMPS, get_paginated_pages, build_reply_markup
 from Handler.handler import handle_message
 from Handler.handler_export import handle_export_clients_to_excel
@@ -132,3 +133,18 @@ def handle_export(chat_id, text):
         send_document(chat_id, result, caption="Список клиентов в Excel")
     else:
         send_message(chat_id, f"Ошибка экспорта: {result}")
+
+def notify_admin(text):
+    url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/sendMessage"
+    admin_chat_ids = get_admin_chat_ids()
+    for chat_id in admin_chat_ids:
+        params = {"chat_id": chat_id, "text": text}
+        try:
+            requests.get(url, params=params, timeout=timeout)
+        except Exception as e:
+            logging.error(f"Ошибка при отправке уведомления админу: {e}")
+
+
+def get_admin_chat_ids():
+    from CommandsDB.get import get_all_admin_chat_ids_from_db
+    return get_all_admin_chat_ids_from_db()
