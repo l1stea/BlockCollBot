@@ -74,12 +74,53 @@ pytest tests/
 └── tests/
     └── test_get.py
 ```
+---
+
+**Для запуска бота требуется Python 3.8+ и доступ к MySQL.**
+
+
+## Безопасность и переменные окружения
+
+Для хранения секретных данных (токенов, паролей, логинов) используется файл `.env`, который не добавляется в репозиторий.
+
+### Как настроить
+
+1. **Создайте файл `.env` в корне проекта:**
+    ```
+    TELEGRAM_TOKEN=ваш_секретный_токен
+    DB_USER=ваш_пользователь
+    DB_PASSWORD=ваш_пароль
+    DB_HOST=localhost
+    DB_NAME=ваша_база
+    ```
+
+2. **Убедитесь, что в `.gitignore` есть строка:**
+    ```
+    .env
+    ```
+
+3. **Весь проект автоматически подхватит переменные из `.env` через библиотеку [python-dotenv](https://pypi.org/project/python-dotenv/).**
+
+4. **Пример использования в `config.py`:**
+    ```python
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+
+    DB_CONFIG = {
+        "host": os.getenv("DB_HOST"),
+        "user": os.getenv("DB_USER"),
+        "password": os.getenv("DB_PASSWORD"),
+        "database": os.getenv("DB_NAME")
+    }
+    TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+    ```
+
+**Это защищает ваши пароли и токены от случайной публикации в открытом доступе!**
 
 ## Контакты
 
 Автор: Тимошенко Е.М.  
 GitHub: [l1stea](https://github.com/l1stea)
-
----
-
-**Для запуска бота требуется Python 3.8+ и доступ к MySQL.**
+___
