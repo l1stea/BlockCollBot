@@ -8,7 +8,7 @@ ROLE_COMMANDS = {
     "warehouse": ["addsupply", "listsupplies"],
     "hr": ["addemployee", "listemployees"],
     "assembler": ["addassembly", "listassemblies"],
-    "guest": ["start", "chat_id", "registration", "help"]
+    "guest": ["start", "chat_id"]
 }
 
 def get_user_role(chat_id):

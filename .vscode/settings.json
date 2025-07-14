@@ -1,6 +1,4 @@
 {
-    "debug.console.clearOnRestart": true,
-    "terminal.integrated.inheritEnv": false,
     "terminal.integrated.enablePersistentSessions": false,
     "python.terminal.launchArgs": [],
     "python.terminal.activateEnvironment": false

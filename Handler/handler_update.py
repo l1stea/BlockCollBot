@@ -4,12 +4,15 @@ from Handler.commands import *
 # Обработчик для обновления сущностей
 def handle_update(text, entity_name, update_func, entity_label):
     try:
-        parts = text.strip().split()
-        if len(parts) < 4 or len(parts[2:]) % 2 != 0:
+        # Сначала делим по первому пробелу
+        _, rest = text.split(" ", 1)
+        # Теперь делим оставшееся по запятым
+        parts = rest.strip().split("|")
+        if len(parts) < 3 or len(parts[2:]) % 2 != 1:
             return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> <field> <value> [<field> <value> ...]'."
 
-        entity_id = int(parts[1])
-        updates = parts[2:]
+        entity_id = int(parts[0])
+        updates = parts[1:]
 
         field_dict = {
             updates[i]: updates[i + 1] for i in range(0, len(updates), 2)

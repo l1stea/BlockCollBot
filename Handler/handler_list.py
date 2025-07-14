@@ -51,8 +51,8 @@ def handle_list_components(text):
         if not components:
             return "Нет комплектующих в базе данных."
         response = "\n".join(
-            f"{component_id}: {product_name}, {price} руб., {stock_quantity} шт."
-            for component_id, product_name, price, stock_quantity in components
+            f"{component_id}: {product_name}, {price} руб., {description}, {stock_quantity} шт."
+            for component_id, product_name, price, description, stock_quantity in components
         )
         return response
     except Exception as e:
@@ -65,8 +65,8 @@ def handle_list_suppliers(text):
         if not suppliers:
             return "Нет поставщиков в базе данных."
         response = "\n".join(
-            f"{supplier_id}: {supplier_name}, {contact_info}"
-            for supplier_id, supplier_name, contact_info in suppliers
+            f"{supplier_id}: {company_name}, {contact_name}, {contact_phone}, {contact_email}"
+            for supplier_id, company_name, contact_name, contact_phone, contact_email in suppliers
         )
         return response
     except Exception as e:

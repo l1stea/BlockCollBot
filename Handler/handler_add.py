@@ -5,7 +5,7 @@ from Handler.commands import *
 def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
     try:
         _, data = text.split(" ", 1)
-        parts = [p.strip() for p in data.split(",", len(expected_fields) - 1)]
+        parts = [p.strip() for p in data.split("|", len(expected_fields) - 1)]
         if len(parts) != len(expected_fields):
             raise ValueError("count")
         try:
@@ -17,7 +17,7 @@ def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
             return f"Ошибка при добавлении {entity_label.lower()}: проверьте корректность данных ({wrong_field})."
         return f"{entity_label} добавлен!"
     except ValueError as ve:
-        fields_str = ", ".join(f"<{f}>" for f in expected_fields)
+        fields_str = " | ".join(f"<{f}>" for f in expected_fields)
         if str(ve) == "count":
             return f"Ошибка: команда должна быть в формате '/add{entity_label.lower()} {fields_str}'."
         elif str(ve) == "type":

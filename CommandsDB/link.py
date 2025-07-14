@@ -14,5 +14,9 @@ def link_table(table, fields, values):
 def link_assembly_component(assembly_id, component_id):
     return link_table("assembly_components", ["assembly_id", "component_id"], [assembly_id, component_id])
 
-def link_component_supplier(component_id, supplier_id):
-    return link_table("component_suppliers", ["component_id", "supplier_id"], [component_id, supplier_id])
+def link_component_supplier(component_id, supplier_id, supply_date, quantity_delivered):
+    return link_table(
+                        "component_suppliers",
+                        ["component_id", "supplier_id", "supply_date", "quantity_delivered"],
+                        [component_id, supplier_id, supply_date, quantity_delivered]
+                    )
