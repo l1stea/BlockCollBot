@@ -33,6 +33,6 @@ def cleanup_paginated_texts():
                     PAGINATED_TIMESTAMPS.pop((chat_id, message_id), None)
             if not PAGINATED_TEXTS[chat_id]:
                 del PAGINATED_TEXTS[chat_id]
-        time.sleep(600) # Проверяем каждые 10 минут
+        time.sleep(600) # Проверяем каждые 600 секунд (10 минут), что меньше MAX_LIFETIME (3600 секунд)
 
 threading.Thread(target=cleanup_paginated_texts, daemon=True).start()

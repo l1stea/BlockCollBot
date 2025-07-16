@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from mysql.connector import errorcode
 from CommandsDB.db import connect_db
 
 # Общая функция для обновления данных в таблицах
@@ -29,9 +30,9 @@ def update_table(table_name, record_id, **fields):
     except mysql.connector.IntegrityError as e:
         return False, str('Не существует связанной записи в другой таблице. Проверьте целостность данных.')
     except Exception as e:
-        if e.errno == 1366:
+        if e.errno == errorcode.ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:
             return False, str('Неверный формат данных. Проверьте правильность введенных значений.')
-        if e.errno == 1054:
+        if e.errno == errorcode.ER_BAD_FIELD_ERROR:
             return False, str('Указано неверное поле для обновления. Проверьте правильность имен полей.')
         return False, str(e)
 

@@ -19,8 +19,9 @@ def check_access(chat_id, command):
     Проверяет, имеет ли пользователь с данным chat_id право выполнять команду.
     """
     role = get_user_role(chat_id)
+    guest_allowed = ROLE_COMMANDS.get("guest", [])
     if not role:
-        allowed_guest = ROLE_COMMANDS.get("guest", [])
-        return command in allowed_guest
+        return command in guest_allowed
     allowed = ROLE_COMMANDS.get(role, [])
-    return "all" in allowed or command in allowed
+    # Authenticated users can access both their role's and guest commands
+    return "all" in allowed or command in allowed or command in guest_allowed

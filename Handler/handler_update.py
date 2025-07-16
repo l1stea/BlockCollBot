@@ -9,7 +9,7 @@ def handle_update(text, entity_name, update_func, entity_label):
         # Теперь делим оставшееся по запятым
         parts = rest.strip().split("|")
         if len(parts) < 3 or len(parts[2:]) % 2 != 1:
-            return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> | <field> | <value> [<field> <value> ...]'."
+            return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> | <field> | <value> [| <field> | <value> ...]'."
 
         entity_id = int(parts[0])
         updates = parts[1:]

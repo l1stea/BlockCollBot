@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
+from datetime import datetime, timedelta
 
 def list_table(table, fields):
     conn = connect_db()
@@ -37,10 +38,13 @@ def list_financials():
     conn = connect_db()
     if conn:
         cursor = conn.cursor()
-        query = f"SELECT sale_id, employee_id, client_id, product_id, sale_date, quantity, total_price \
-        FROM sales \
-        WHERE sale_date >= DATE_SUB('2025-07-15', INTERVAL 7 DAY) AND sale_date <= '2025-07-15';"
-        cursor.execute(query)
+        end_date = datetime.now().date()
+        start_date = end_date - timedelta(days=7)
+        query = (
+            "SELECT sale_id, employee_id, client_id, product_id, sale_date, quantity, total_price "
+            "FROM sales WHERE sale_date >= %s AND sale_date <= %s;"
+        )
+        cursor.execute(query, (start_date, end_date))
         rows = cursor.fetchall()
         conn.close()
         return rows
