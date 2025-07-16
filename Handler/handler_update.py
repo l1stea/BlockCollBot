@@ -27,26 +27,26 @@ def handle_update(text, entity_name, update_func, entity_label):
         return f"Ошибка: {str(e)}"
 
 # Конкретные обработчики
-@command("/updateclient")
+@command("/updateclient", description="Обновить клиента. Пример: /updateclient 1 | email | new_email | phone | new_phone")
 def handle_update_client(text):
     return handle_update(text, "client", update_client, "клиент")
 
 # Обработчик для обновления работников
-@command("/updateworker")
+@command("/updateworker", description="Обновить работника. Пример: /updateworker 1 | email | new_email | phone | new_phone")
 def handle_update_worker(text):
     return handle_update(text, "worker", update_worker, "работник")
 
 # Обработчик для обновления сборок
-@command("/updateassembly")
+@command("/updateassembly", description="Обновить сборку. Пример: /updateassembly 1 | name | new_name | description | new_description | price | new_price")
 def handle_update_assembly(text):
     return handle_update(text, "assembly", update_assembly, "сборка")
 
 # Обработчик для обновления комплектующих
-@command("/updatecomponent")
+@command("/updatecomponent", description="Обновить комплектующий. Пример: /updatecomponent 1 | name | new_name | price | new_price | description | new_description | stock | new_stock")
 def handle_update_component(text):
     return handle_update(text, "component", update_component, "комплектующий")
 
 # Обработчик для обновления поставщиков
-@command("/updatesupplier")
+@command("/updatesupplier", description="Обновить поставщика. Пример: /updatesupplier 1 | email | new_email | phone | new_phone")
 def handle_update_supplier(text):
     return handle_update(text, "supplier", update_supplier, "поставщик")

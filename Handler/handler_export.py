@@ -1,7 +1,7 @@
 import pandas as pd
 from Handler.commands import command
 
-@command("/exportclients")
+@command("/exportclients", description="Экспортировать список клиентов в Excel. Пример: /exportclients")
 def handle_export_clients_to_excel(file_path="clients.xlsx"):
     file_path = file_path.replace("/export", "").replace("export", "")
     if not file_path.lower().endswith(".xlsx"):
@@ -12,11 +12,11 @@ def handle_export_clients_to_excel(file_path="clients.xlsx"):
     try:
         df = pd.DataFrame(data, columns=columns)
         df.to_excel(file_path, index=False)
-        return True, file_path
+        return ("document", file_path, "Список клиентов")
     except Exception as e:
-        return False, str(e)
-    
-@command("/exportfinancials")
+        return ("text", str(e))
+
+@command("/exportfinancials", description="Экспортировать финансовые данные в Excel. Пример: /exportfinancials")
 def handle_export_financials_to_excel(file_path="financials.xlsx"):
     file_path = file_path.replace("/export", "").replace("export", "")
     if not file_path.lower().endswith(".xlsx"):
@@ -47,6 +47,6 @@ def handle_export_financials_to_excel(file_path="financials.xlsx"):
     try:
         df = pd.DataFrame(export_data, columns=columns)
         df.to_excel(file_path, index=False)
-        return True, file_path
+        return ("document", file_path, "Финансовый отчет")
     except Exception as e:
-        return False, str(e)
+        return ("text", str(e))

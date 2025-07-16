@@ -1,47 +1,26 @@
 from CommandsDB.delete import *
 from Handler.commands import *
 
-@command("/deleteclient")
-def handle_delete_client(text):
-    try:
-        _, client_id = text.split(" ", 1)
-        delete_client(int(client_id.strip()))
-        return "Клиент удалён!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/deleteclient <id>'."
+# Универсальный обработчик удаления
+def make_delete_handler(entity_name, delete_func, description):
+    @command(f"/delete{entity_name}", description=description)
+    def handler(text):
+        try:
+            _, entity_id = text.split(" ", 1)
+            result = delete_func(int(entity_id.strip()))
+            if result is True:
+                return f"{entity_name.capitalize()} удалён!"
+            elif result is False:
+                return f"{entity_name.capitalize()} с таким ID не найден."
+            else:
+                return result  # Например, "Связанные данные: удаление невозможно"
+        except ValueError:
+            return f"Ошибка: команда должна быть в формате '/delete{entity_name} <id>'."
+    return handler
 
-@command("/deleteworker")
-def handle_delete_worker(text):
-    try:
-        _, worker_id = text.split(" ", 1)
-        delete_worker(int(worker_id.strip()))
-        return "Работник удалён!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/deleteworker <id>'."
-
-@command("/deleteassembly")
-def handle_delete_assembly(text):
-    try:
-        _, assembly_id = text.split(" ", 1)
-        delete_assembly(int(assembly_id.strip()))
-        return "Сборка удалена!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/deleteassembly <id>'."
-
-@command("/deletecomponent")
-def handle_delete_component(text):
-    try:
-        _, component_id = text.split(" ", 1)
-        delete_component(int(component_id.strip()))
-        return "Комплектующий удалён!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/deletecomponent <id>'."
-
-@command("/deletesupplier")
-def handle_delete_supplier(text):
-    try:
-        _, supplier_id = text.split(" ", 1)
-        delete_supplier(int(supplier_id.strip()))
-        return "Поставщик удалён!"
-    except ValueError:
-        return "Ошибка: команда должна быть в формате '/deletesupplier <id>'."
+# Регистрируем обработчики для всех сущностей
+make_delete_handler("client", delete_client, "Удалить клиента. Пример: /deleteclient 1")
+make_delete_handler("worker", delete_worker, "Удалить работника. Пример: /deleteworker 1")
+make_delete_handler("assembly", delete_assembly, "Удалить сборку. Пример: /deleteassembly 1")
+make_delete_handler("component", delete_component, "Удалить комплектующее. Пример: /deletecomponent 1")
+make_delete_handler("supplier", delete_supplier, "Удалить поставщика. Пример: /deletesupplier 1")

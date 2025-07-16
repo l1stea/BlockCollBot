@@ -14,20 +14,20 @@ def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
             raise ValueError("type")
         result, wrong_field = add_func(*converted)
         if result is False:
-            return f"Ошибка при добавлении {entity_label.lower()}: проверьте корректность данных ({wrong_field})."
-        return f"{entity_label} добавлен!"
+            return ("text", f"Ошибка при добавлении {entity_label.lower()}: проверьте корректность данных ({wrong_field}).")
+        return ("text", f"{entity_label.capitalize()} добавлен!")
     except ValueError as ve:
         fields_str = " | ".join(f"<{f}>" for f in expected_fields)
         if str(ve) == "count":
-            return f"Ошибка: команда должна быть в формате '/add{entity_label.lower()} {fields_str}'."
+            return ("text", f"Ошибка: команда должна быть в формате '/add{entity_label.lower()} {fields_str}'.")
         elif str(ve) == "type":
-            return f"Ошибка: неверный тип данных. Проверьте правильность ввода для: {fields_str}."
+            return ("text", f"Ошибка: неверный тип данных. Проверьте правильность ввода для: {fields_str}.")
         else:
-            return f"Ошибка: команда должна быть в формате '/add{entity_label.lower()} {fields_str}'."
+            return ("text", f"Ошибка: команда должна быть в формате '/add{entity_label.lower()} {fields_str}'.")
     except Exception as e:
-        return f"Ошибка при добавлении: {e}"
+        return ("text", f"Ошибка при добавлении: {e}")
 
-@command("/addclient")
+@command("/addclient", description="Добавить клиента. Пример: /addclient Иван | Иванов | ivan@example.com | 1234567890 | Улица 1")
 def handle_add_client(text):
     return handle_add(
         text,
@@ -37,7 +37,7 @@ def handle_add_client(text):
         add_client
     )
 
-@command("/addworker")
+@command("/addworker", description="Добавить работника. Пример: /addworker 1 | Иван | Иванов | 50000 | 2023-01-01 | 1234567890")
 def handle_add_worker(text):
     return handle_add(
         text,
@@ -47,7 +47,7 @@ def handle_add_worker(text):
         add_worker
     )
 
-@command("/addassembly")
+@command("/addassembly", description="Добавить сборку. Пример: /addassembly Продукт | Описание | 100.0 | 10")
 def handle_add_assembly(text):
     return handle_add(
         text,
@@ -57,7 +57,7 @@ def handle_add_assembly(text):
         add_assembly
     )
 
-@command("/addcomponent")
+@command("/addcomponent", description="Добавить комплектующее. Пример: /addcomponent Продукт | 50.0 | Описание | 100")
 def handle_add_component(text):
     return handle_add(
         text,
@@ -67,7 +67,7 @@ def handle_add_component(text):
         add_component
     )
 
-@command("/addsupplier")
+@command("/addsupplier", description="Добавить поставщика. Пример: /addsupplier Компания | Контактное лицо | 1234567890 | контакт@example.com")
 def handle_add_supplier(text):
     return handle_add(
         text,
@@ -77,7 +77,7 @@ def handle_add_supplier(text):
         add_supplier
     )
 
-@command("/addsale")
+@command("/addsale", description="Добавить продажу. Пример: /addsale 1 | 2 | 3 | 5 | 2023-01-01 | 500.0")
 def handle_add_sale(text):
     return handle_add(
         text,
@@ -87,7 +87,7 @@ def handle_add_sale(text):
         add_sales
     )
 
-@command("/addposition")
+@command("/addposition", description="Добавить позицию. Пример: /addposition hr")
 def handle_add_position(text):
     return handle_add(
         text,

@@ -1,11 +1,11 @@
 from Handler.commands import *
 
-@command("/start")
+@command("/start", description="Начать работу с ботом.")
 def handle_start(text):
     return "Привет! Я ваш новый бот. Используйте команды для редактирования данных."
 
 
-@command("/help")
+@command("/help", description="Показать список всех команд и их описания.")
 def handle_help(text):
     return (
         "Список доступных команд:\n\n"

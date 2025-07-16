@@ -24,7 +24,7 @@ def handle_search(text, search_func, entity_label, format_result):
         return f"Ошибка: {str(e)}"
 
 # Остальные обработчики остаются теми же:
-@command("/searchclient")
+@command("/searchclient", description="Поиск клиента. Пример: /searchclient Иван")
 def handle_search_client(text):
     return handle_search(
         text,
@@ -35,7 +35,7 @@ def handle_search_client(text):
     )
 
 # Обработчик для поиска работников
-@command("/searchworker")
+@command("/searchworker", description="Поиск работника. Пример: /searchworker Иван")
 def handle_search_worker(text):
     return handle_search(
         text,
@@ -46,7 +46,7 @@ def handle_search_worker(text):
     )
 
 # Обработчик для поиска сборок
-@command("/searchassembly")
+@command("/searchassembly", description="Поиск сборки. Пример: /searchassembly 1")
 def handle_search_assembly(text):
     return handle_search(
         text,
@@ -57,7 +57,7 @@ def handle_search_assembly(text):
     )
 
 # Обработчик для поиска комплектующих
-@command("/searchcomponent")
+@command("/searchcomponent", description="Поиск комплектующего. Пример: /searchcomponent 1")
 def handle_search_component(text):
     return handle_search(
         text,
@@ -68,7 +68,7 @@ def handle_search_component(text):
     )
 
 # Обработчик для поиска поставщиков
-@command("/searchsupplier")
+@command("/searchsupplier", description="Поиск поставщика. Пример: /searchsupplier 1")
 def handle_search_supplier(text):
     return handle_search(
         text,

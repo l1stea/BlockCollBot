@@ -6,10 +6,17 @@ def delete_record(table, id_field, record_id):
     conn = connect_db()
     if conn:
         cursor = conn.cursor()
-        query = f"DELETE FROM {table} WHERE {id_field} = %s"
-        cursor.execute(query, (record_id,))
-        conn.commit()
-        conn.close()
+        try:
+            query = f"DELETE FROM {table} WHERE {id_field} = %s"
+            cursor.execute(query, (record_id,))
+            conn.commit()
+            deleted = cursor.rowcount
+            return deleted > 0  # True если удалено, иначе False
+        except mysql.connector.IntegrityError:
+            # Запись связана с другими таблицами
+            return "Связанные данные: удаление невозможно"
+        finally:
+            conn.close()
 
 def delete_client(client_id):
     return delete_record("clients", "client_id", client_id)

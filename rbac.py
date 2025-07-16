@@ -1,7 +1,6 @@
 # Пример структуры ролей и разрешённых команд
 from Handler.handler_get import handle_get_position_by_chat_id
 
-
 ROLE_COMMANDS = {
     "admin": ["all"],
     "seller": ["addsale", "addclient", "listclients", "searchclient"],

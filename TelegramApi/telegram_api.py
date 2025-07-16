@@ -5,7 +5,6 @@ import logging
 import json
 from TelegramApi.pagination import PAGINATED_TEXTS, PAGINATED_TIMESTAMPS, get_paginated_pages, build_reply_markup
 from Handler.handler import handle_message
-from TelegramApi.export import handle_export
 from TelegramApi.utils import send_message
 
 def edit_message(chat_id, message_id, page=0, page_size=None):
@@ -70,12 +69,13 @@ def get_updates(offset=None):
                 offset = update["update_id"] + 1
             elif "message" in update:
                 chat_id = update["message"]["chat"]["id"]
-                text = update["message"].get("text", "")
-                if "/export" in text or "export" in text:
-                    handle_export(chat_id, text)
+                result = handle_message(update["message"])
+                if isinstance(result, tuple) and result[0] == "document":
+                        # ('document', file_path, caption)
+                        from TelegramApi.utils import send_document
+                        send_document(chat_id, result[1], caption=result[2])
                 else:
-                    response_text = handle_message(update["message"])
-                    send_message(chat_id, response_text)
+                   send_message(chat_id, result if isinstance(result, str) else result[1])
                 offset = update["update_id"] + 1
         return offset
     except requests.exceptions.Timeout:

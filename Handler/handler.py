@@ -17,26 +17,33 @@ def handle_message(message):
 
         # Проверка: если текст не начинается с '/', это не команда
         if not text_raw.startswith("/"):
-            return "Пожалуйста, используйте команды, начинающиеся с '/'. Например: /help"
-        
+            return ("text", "Пожалуйста, используйте команды, начинающиеся с '/'. Например: /help")
+
         # Команда chat_id
         if text_raw.strip().lower() == "/chat_id":
-            return f"Ваш chat_id: {chat_id}"
+            return ("text", f"Ваш chat_id: {chat_id}")
 
         # Определяем команду (например, /add_client -> add_client)
         command = text_raw.split()[0].lstrip("/")
 
         # Проверяем доступ
         if not check_access(chat_id, command):
-            return "У вас нет прав для выполнения этой команды."
+            return ("text", "У вас нет прав для выполнения этой команды.")
         
+        # Приводим текст к нижнему регистру для унификации
         text = text_raw.lower()
+
+        if text.endswith(" -h") or text.endswith(" --help"):
+            cmd = text.split()[0]
+            desc = command_descriptions.get(cmd)
+            if desc:
+                return ("text", f"Описание команды {cmd}:\n{desc}")
 
         # Словарь команд
         for cmd, handler in command_handlers.items():
             if text.startswith(cmd):
                 return handler(text_raw)
-        return "Я не понимаю эту команду."
+        return ("text", "Я не понимаю эту команду.")
 
     except:
-        return "Я не понимаю."
+        return ("text", "Я не понимаю.")
