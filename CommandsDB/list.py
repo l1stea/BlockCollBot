@@ -29,3 +29,18 @@ def list_suppliers():
 
 def list_sales():
     return list_table("sales", ["sale_id", "employee_id", "client_id", "product_id", "sale_date", "quantity", "total_price"])
+
+def list_positions():
+    return list_table("positions", ["position_id", "position"])
+
+def list_financials():
+    conn = connect_db()
+    if conn:
+        cursor = conn.cursor()
+        query = f"SELECT sale_id, employee_id, client_id, product_id, sale_date, quantity, total_price \
+        FROM sales \
+        WHERE sale_date >= DATE_SUB('2025-07-15', INTERVAL 7 DAY) AND sale_date <= '2025-07-15';"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        conn.close()
+        return rows

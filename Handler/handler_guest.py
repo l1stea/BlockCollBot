@@ -11,7 +11,7 @@ def handle_help(text):
         "Список доступных команд:\n\n"
         "Добавление:\n"
         "/addclient <first_name> | <last_name> | <email> | <phone_number> | <address> - добавить клиента\n"
-        "/addworker <first_name> | <last_name> | <position> | <salary> - добавить работника\n"
+        "/addworker <position_id> | <first_name> | <last_name> | <salary> | <hire_date> | <chat_id> - добавить работника\n"
         "/addassembly <product_name> | <product_description> | <price> | <stock_quantity> - добавить сборку\n"
         "/addcomponent <product_name> | <price> | <description> | <stock_quantity> - добавить комплектующее\n"
         "/addsupplier <supplier_name> | <contact_info> - добавить поставщика\n\n"

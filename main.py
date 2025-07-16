@@ -1,7 +1,7 @@
 import config
 import time
 from TelegramApi.telegram_api import get_updates
-from TelegramApi.telegram_api import notify_admin
+from TelegramApi.utils import notify_admin
 from CommandsDB.db import create_tables
 from Logging.bot_logging import *
 

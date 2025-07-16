@@ -1,0 +1,78 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.0.4 Chrome/138.0.7204.97 Electron/37.2.1 Safari/537.36" version="28.0.4">
+  <diagram name="Страница — 1" id="GeJDBFk3xVzfYJliv-rb">
+    <mxGraphModel dx="1358" dy="801" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-26" target="VEfHXI58vLWsMOqvnMO2-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-26" target="VEfHXI58vLWsMOqvnMO2-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-26" value="Device" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="835" y="260" width="170" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-16" value="Server" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="70" y="260" width="580" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-2" target="VEfHXI58vLWsMOqvnMO2-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-2" value="Database" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="310" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-3" target="VEfHXI58vLWsMOqvnMO2-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-18" value="SQL" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="VEfHXI58vLWsMOqvnMO2-10">
+          <mxGeometry y="2" relative="1" as="geometry">
+            <mxPoint y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-3" value="MySQL" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="310" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-4" target="VEfHXI58vLWsMOqvnMO2-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-19" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="VEfHXI58vLWsMOqvnMO2-11">
+          <mxGeometry x="0.025" y="-2" relative="1" as="geometry">
+            <mxPoint x="-1" y="-12" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-4" value="App" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="310" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-5" target="VEfHXI58vLWsMOqvnMO2-22">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="830" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-28" value="HTTPS" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="VEfHXI58vLWsMOqvnMO2-25">
+          <mxGeometry x="0.2221" y="1" relative="1" as="geometry">
+            <mxPoint x="-7" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-5" value="Telegram&lt;br&gt;Server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="260" width="120" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-6" target="VEfHXI58vLWsMOqvnMO2-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-24" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-6" target="VEfHXI58vLWsMOqvnMO2-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-6" value="User" style="rounded=0;whiteSpace=wrap;html=1;shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="307.5" width="60" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VEfHXI58vLWsMOqvnMO2-22" target="VEfHXI58vLWsMOqvnMO2-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VEfHXI58vLWsMOqvnMO2-22" value="Telegram App&lt;div&gt;(User Interface)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="310" width="120" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

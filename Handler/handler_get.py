@@ -9,4 +9,4 @@ def handle_get_position_by_chat_id(text):
         return position
     except Exception as e:
         return None
-        # return f"Ошибка: {str(e)}"
+    

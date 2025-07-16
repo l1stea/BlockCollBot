@@ -29,7 +29,7 @@ def handle_message(message):
         # Проверяем доступ
         if not check_access(chat_id, command):
             return "У вас нет прав для выполнения этой команды."
-
+        
         text = text_raw.lower()
 
         # Словарь команд

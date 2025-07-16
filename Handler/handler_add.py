@@ -42,8 +42,8 @@ def handle_add_worker(text):
     return handle_add(
         text,
         "worker",
-        ["first_name", "last_name", "position", "salary"],
-        [str, str, str, float],
+        ["position_id", "first_name", "last_name", "salary", "hire_date", "chat_id"],
+        [int, str, str, float, to_mysql_date, int],
         add_worker
     )
 
@@ -85,4 +85,14 @@ def handle_add_sale(text):
         ["employee_id", "client_id", "product_id", "quantity", "sale_date", "total_price"],
         [int, int, int, int, to_mysql_date, float],
         add_sales
+    )
+
+@command("/addposition")
+def handle_add_position(text):
+    return handle_add(
+        text,
+        "position",
+        ["position"],
+        [str],
+        add_position
     )

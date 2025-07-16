@@ -1,5 +1,4 @@
 import mysql.connector
-from mysql.connector import Error
 from CommandsDB.db import connect_db
 
 def universal_add(table, fields, values, fk_map=None):
@@ -24,14 +23,13 @@ def universal_add(table, fields, values, fk_map=None):
     return False, None
 
 def add_client(first_name, last_name, email, phone_number, address):
-    # Можно добавить проверки здесь, если нужно
     return universal_add(
         "clients",
         ["first_name", "last_name", "email", "phone_number", "address"],
         [first_name, last_name, email, phone_number, address]
     )
 
-def add_worker(first_name, last_name, position_id, salary, hire_date, chat_id=None):
+def add_worker(position_id, first_name, last_name, salary, hire_date, chat_id=None):
     return universal_add(
         "employees",
         ["first_name", "last_name", "position_id", "salary", "hire_date", "chat_id"],
@@ -70,4 +68,11 @@ def add_sales(employee_id, client_id, product_id, quantity, sale_date, total_pri
             "client_id": "FOREIGN KEY (`client_id`",
             "product_id": "FOREIGN KEY (`product_id`"
         }
+    )
+
+def add_position(position):
+    return universal_add(
+        "positions",
+        ["position"],
+        [position]
     )

@@ -79,8 +79,22 @@ def handle_list_sales(text):
         if not sales:
             return "Нет продаж в базе данных."
         response = "\n".join(
-            f"{sale_id}: Работник {employee_id}, Клиент {client_id}, Продукт {product_id}, Количество {quantity}, Дата {sale_date}"
-            for sale_id, employee_id, client_id, product_id, quantity, sale_date in sales
+            f"{sale_id}: Работник {employee_id}, Клиент {client_id}, Продукт {product_id}, Количество {quantity}, Дата {sale_date}, Итого {total_price} руб."
+            for sale_id, employee_id, client_id, product_id, sale_date, quantity, total_price in sales
+        )
+        return response
+    except Exception as e:
+        return f"Ошибка: {str(e)}"
+    
+@command("/listpositions")
+def handle_list_positions(text):
+    try:
+        positions = list_positions()
+        if not positions:
+            return "Нет позиций в базе данных."
+        response = "\n".join(
+            f"{position_id}: {position}"
+            for position_id, position in positions
         )
         return response
     except Exception as e:

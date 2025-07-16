@@ -84,14 +84,3 @@ def get_updates(offset=None):
     except requests.exceptions.RequestException as e:
         logging.error(f"Ошибка при получении обновлений: {e}")
         return offset
-    
-def notify_admin(text):
-    url = f"https://api.telegram.org/bot{config.TELEGRAM_TOKEN}/sendMessage"
-    from CommandsDB.get import get_all_admin_chat_ids_from_db
-    admin_chat_ids = get_all_admin_chat_ids_from_db()   
-    for chat_id in admin_chat_ids:
-        params = {"chat_id": chat_id, "text": text}
-        try:
-            requests.get(url, params=params, timeout=config.HTTP_REQUEST_TIMEOUT)
-        except Exception as e:
-            logging.error(f"Ошибка при отправке уведомления админу: {e}")

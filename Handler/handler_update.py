@@ -9,7 +9,7 @@ def handle_update(text, entity_name, update_func, entity_label):
         # Теперь делим оставшееся по запятым
         parts = rest.strip().split("|")
         if len(parts) < 3 or len(parts[2:]) % 2 != 1:
-            return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> <field> <value> [<field> <value> ...]'."
+            return f"Ошибка: команда должна быть в формате '/update{entity_name} <id> | <field> | <value> [<field> <value> ...]'."
 
         entity_id = int(parts[0])
         updates = parts[1:]
@@ -18,15 +18,11 @@ def handle_update(text, entity_name, update_func, entity_label):
             updates[i]: updates[i + 1] for i in range(0, len(updates), 2)
         }
 
-        response = update_func(entity_id, **field_dict)
-        if response is True:
+        result, response = update_func(entity_id, **field_dict)
+        if result is True:
             return f"{entity_label.capitalize()} обновлен!"
-        elif isinstance(response, str):
-            return f"Ошибка: {response}"
         else:
-            return f"Ошибка: не удалось обновить {entity_label}."
-    except ValueError:
-        return f"Ошибка: ID должен быть числом. Формат: '/update{entity_name} <id> <field> <value> ...'."
+            return f"Ошибка: {response}"
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
