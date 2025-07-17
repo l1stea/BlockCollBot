@@ -1,20 +1,50 @@
-import mysql.connector
 from mysql.connector import Error
 from CommandsDB.db import connect_db
 from Logging.bot_logging import logging
+import re
 
-def universal_search(table, fields, keywords):
+def parse_search_terms(text):
+    # Извлекает пары поле:значение и просто значения
+    pattern = r'(\w+):"([^"]+)"|(\w+):(\S+)|"([^"]+)"|(\S+)'
+    matches = re.findall(pattern, text)
+    fields = {}
+    keywords = []
+    for m in matches:
+        if m[0] and m[1]:  # поле:"значение"
+            fields[m[0]] = m[1]
+        elif m[2] and m[3]:  # поле:значение
+            fields[m[2]] = m[3]
+        elif m[4]:  # "значение"
+            keywords.append(m[4])
+        elif m[5]:  # значение
+            keywords.append(m[5])
+    return fields, keywords
+
+def universal_search(table, fields, keywords, field_filters=None):
     try:
         connection = connect_db()
         cursor = connection.cursor()
-        query = f"SELECT * FROM {table} WHERE " + " AND ".join(
-            "(" + " OR ".join(f"{field} LIKE %s" for field in fields) + ")"
-            for _ in keywords
-        )
+        where_clauses = []
         params = []
-        for kw in keywords:
-            like_kw = f"%{kw}%"
-            params.extend([like_kw] * len(fields))
+
+        # Поиск по конкретным полям
+        if field_filters:
+            for field, value in field_filters.items():
+                where_clauses.append(f"{field} LIKE %s")
+                params.append(f"%{value}%")
+
+        # Поиск по всем полям
+        if keywords:
+            for kw in keywords:
+                where_clauses.append(
+                    "(" + " OR ".join(f"{field} LIKE %s" for field in fields) + ")"
+                )
+                params.extend([f"%{kw}%"] * len(fields))
+
+        query = f"SELECT * FROM {table}"
+        if where_clauses:
+            query += " WHERE " + " AND ".join(where_clauses)
+
         cursor.execute(query, params)
         return cursor.fetchall()
     except Error as e:
@@ -23,19 +53,3 @@ def universal_search(table, fields, keywords):
         if connection.is_connected():
             cursor.close()
             connection.close()
-
-
-def search_client(keywords):
-    return universal_search("clients", ["first_name", "last_name", "email", "phone_number", "address"], keywords)
-
-def search_worker(keywords):
-    return universal_search("employees", ["first_name", "last_name", "position_id", "salary", "hire_date", "chat_id"], keywords)
-
-def search_assembly(keywords):
-    return universal_search("assemblies", ["product_name", "description", "price", "stock_quantity"], keywords)
-
-def search_component(keywords):
-    return universal_search("components", ["product_name", "price", "description", "stock_quantity"], keywords)
-
-def search_supplier(keywords):
-    return universal_search("suppliers", ["company_name", "contact_name", "contact_phone", "contact_email"], keywords)

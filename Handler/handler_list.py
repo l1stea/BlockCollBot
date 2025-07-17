@@ -23,7 +23,7 @@ def handle_list_workers(text):
         if not workers:
             return "Нет работников в базе данных."
         response = "\n".join(
-            f"{worker_id}: {first_name} {last_name}, {position_id}, {salary} руб., {hire_date}, {chat_id}"
+            f"{worker_id}: ФИО: {first_name} {last_name}, Должность ID: {position_id}, Зарплата: {salary} руб., Дата найма: {hire_date}, ChatID: {chat_id}"
             for worker_id, position_id, first_name, last_name, salary, hire_date, chat_id in workers
         )
         return response
