@@ -16,7 +16,7 @@ def handle_search(text, table, fields, format_result):
     except Exception as e:
         return ("text", f"Ошибка: {str(e)}")
 
-@command("/searchclient", description="Поиск клиента. Поля: first_name:(str) last_name:(str) email:(str) | phone_number:(str) | address:(str)\nПример: /searchclient Иван")
+@command("/searchclient", description="Поиск клиента. Поля: first_name:(str) last_name:(str) email:(str) phone_number:(str) address:(str)\nПример: /searchclient Иван")
 def handle_search_client(text):
     return handle_search(
         text,
