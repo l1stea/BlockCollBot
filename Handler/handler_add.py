@@ -27,7 +27,8 @@ def handle_add(text, entity_label, expected_fields, convert_fields, add_func):
     except Exception as e:
         return ("text", f"Ошибка при добавлении: {e}")
 
-@command("/addclient", description="Добавить клиента. Пример: /addclient Иван | Иванов | ivan@example.com | 1234567890 | Улица 1")
+@command("/addclient", description="Добавить клиента. Поля: first_name (str) | last_name (str) | email (str) | phone_number (str) | address (str)" \
+"\nПример: /addclient Иван | Иванов | ivan@example.com | 1234567890 | Улица 1")
 def handle_add_client(text):
     return handle_add(
         text,
@@ -37,7 +38,8 @@ def handle_add_client(text):
         add_client
     )
 
-@command("/addworker", description="Добавить работника. Пример: /addworker 1 | Иван | Иванов | 50000 | 2023-01-01 | 1234567890")
+@command("/addworker", description="Добавить работника. Поля: position_id (int) | first_name (str) | last_name (str) | salary (float) | hire_date (date) | chat_id (int)" \
+"\nПример: /addworker 1 | Иван | Иванов | 50000 | 2023-01-01 | 1234567890")
 def handle_add_worker(text):
     return handle_add(
         text,
@@ -47,7 +49,8 @@ def handle_add_worker(text):
         add_worker
     )
 
-@command("/addassembly", description="Добавить сборку. Пример: /addassembly Продукт | Описание | 100.0 | 10")
+@command("/addassembly", description="Добавить сборку. Поля: product_name (str) | product_description (str) | price (float) | stock_quantity (int)" \
+"\nПример: /addassembly Продукт | Описание | 100.0 | 10")
 def handle_add_assembly(text):
     return handle_add(
         text,
@@ -57,7 +60,8 @@ def handle_add_assembly(text):
         add_assembly
     )
 
-@command("/addcomponent", description="Добавить комплектующее. Пример: /addcomponent Продукт | 50.0 | Описание | 100")
+@command("/addcomponent", description="Добавить комплектующее. Поля: component_name (str) | price (float) | description (str) | stock_quantity (int)" \
+"\nПример: /addcomponent Продукт | 50.0 | Описание | 100")
 def handle_add_component(text):
     return handle_add(
         text,
@@ -67,7 +71,8 @@ def handle_add_component(text):
         add_component
     )
 
-@command("/addsupplier", description="Добавить поставщика. Пример: /addsupplier Компания | Контактное лицо | 1234567890 | контакт@example.com")
+@command("/addsupplier", description="Добавить поставщика. Поля: company_name (str) | contact_name (str) | contact_phone (str) | contact_email (str)" \
+"\nПример: /addsupplier Компания | Контактное лицо | 1234567890 | контакт@example.com")
 def handle_add_supplier(text):
     return handle_add(
         text,
@@ -77,7 +82,8 @@ def handle_add_supplier(text):
         add_supplier
     )
 
-@command("/addsale", description="Добавить продажу. Пример: /addsale 1 | 2 | 3 | 5 | 2023-01-01 | 500.0")
+@command("/addsale", description="Добавить продажу. Поля: employee_id (int) | client_id (int) | product_id (int) | quantity (int) | sale_date (date) | total_price (float)" \
+"\nПример: /addsale 1 | 2 | 3 | 5 | 2023-01-01 | 500.0")
 def handle_add_sale(text):
     return handle_add(
         text,
@@ -87,7 +93,7 @@ def handle_add_sale(text):
         add_sales
     )
 
-@command("/addposition", description="Добавить позицию. Пример: /addposition hr")
+@command("/addposition", description="Добавить позицию. Поля: position (str)\nПример: /addposition hr")
 def handle_add_position(text):
     return handle_add(
         text,

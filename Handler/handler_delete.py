@@ -19,8 +19,8 @@ def make_delete_handler(entity_name, delete_func, description):
     return handler
 
 # Регистрируем обработчики для всех сущностей
-make_delete_handler("client", delete_client, "Удалить клиента. Пример: /deleteclient 1")
-make_delete_handler("worker", delete_worker, "Удалить работника. Пример: /deleteworker 1")
-make_delete_handler("assembly", delete_assembly, "Удалить сборку. Пример: /deleteassembly 1")
-make_delete_handler("component", delete_component, "Удалить комплектующее. Пример: /deletecomponent 1")
-make_delete_handler("supplier", delete_supplier, "Удалить поставщика. Пример: /deletesupplier 1")
+make_delete_handler("client", delete_client, "Удалить клиента. Поля: id (int)\nПример: /deleteclient 1")
+make_delete_handler("worker", delete_worker, "Удалить работника. Поля: id (int)\nПример: /deleteworker 1")
+make_delete_handler("assembly", delete_assembly, "Удалить сборку. Поля: id (int)\nПример: /deleteassembly 1")
+make_delete_handler("component", delete_component, "Удалить комплектующее. Поля: id (int)\nПример: /deletecomponent 1")
+make_delete_handler("supplier", delete_supplier, "Удалить поставщика. Поля: id (int)\nПример: /deletesupplier 1")

@@ -24,7 +24,7 @@ def handle_search(text, search_func, entity_label, format_result):
         return f"Ошибка: {str(e)}"
 
 # Остальные обработчики остаются теми же:
-@command("/searchclient", description="Поиск клиента. Пример: /searchclient Иван")
+@command("/searchclient", description="Поиск клиента. Поля: first_name (str) | last_name (str) | email (str) | phone_number (str) | address (str)\nПример: /searchclient Иван")
 def handle_search_client(text):
     return handle_search(
         text,
@@ -35,7 +35,7 @@ def handle_search_client(text):
     )
 
 # Обработчик для поиска работников
-@command("/searchworker", description="Поиск работника. Пример: /searchworker Иван")
+@command("/searchworker", description="Поиск работника. Поля: first_name (str) | last_name (str) | email (str) | phone_number (str) | position_id (int) | chat_id (int)\nПример: /searchworker Иван")
 def handle_search_worker(text):
     return handle_search(
         text,
@@ -46,7 +46,7 @@ def handle_search_worker(text):
     )
 
 # Обработчик для поиска сборок
-@command("/searchassembly", description="Поиск сборки. Пример: /searchassembly 1")
+@command("/searchassembly", description="Поиск сборки. Поля: product_name (str) | product_description (str) | price (float) | stock_quantity (int)\nПример: /searchassembly 1")
 def handle_search_assembly(text):
     return handle_search(
         text,
@@ -57,7 +57,7 @@ def handle_search_assembly(text):
     )
 
 # Обработчик для поиска комплектующих
-@command("/searchcomponent", description="Поиск комплектующего. Пример: /searchcomponent 1")
+@command("/searchcomponent", description="Поиск комплектующего. Поля: component_name (str) | price (float) | description (str) | stock_quantity (int)\nПример: /searchcomponent 1")
 def handle_search_component(text):
     return handle_search(
         text,
@@ -68,7 +68,7 @@ def handle_search_component(text):
     )
 
 # Обработчик для поиска поставщиков
-@command("/searchsupplier", description="Поиск поставщика. Пример: /searchsupplier 1")
+@command("/searchsupplier", description="Поиск поставщика. Поля: company_name (str) | contact_name (str) | contact_phone (str) | contact_email (str)\nПример: /searchsupplier 1")
 def handle_search_supplier(text):
     return handle_search(
         text,

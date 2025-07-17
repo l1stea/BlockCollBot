@@ -2,7 +2,7 @@ from CommandsDB.list import *  # Импортируем функции для с
 from Handler.commands import *
 
 # Обработчики команд для вывода списка
-@command("/listclients", description="Вывести список клиентов. Пример: /listclients")
+@command("/listclients", description="Вывести список клиентов.")
 def handle_list_clients(text):
     try:
         clients = list_clients()
@@ -16,7 +16,7 @@ def handle_list_clients(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-@command("/listworkers", description="Вывести список работников. Пример: /listworkers")
+@command("/listworkers", description="Вывести список работников.")
 def handle_list_workers(text):
     try:
         workers = list_workers()
@@ -30,7 +30,7 @@ def handle_list_workers(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-@command("/listassemblies", description="Вывести список сборок. Пример: /listassemblies")
+@command("/listassemblies", description="Вывести список сборок.")
 def handle_list_assemblies(text):
     try:
         assemblies = list_assemblies()
@@ -44,7 +44,7 @@ def handle_list_assemblies(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-@command("/listcomponents", description="Вывести список комплектующих. Пример: /listcomponents")
+@command("/listcomponents", description="Вывести список комплектующих.")
 def handle_list_components(text):
     try:
         components = list_components()
@@ -58,7 +58,7 @@ def handle_list_components(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-@command("/listsuppliers", description="Вывести список поставщиков. Пример: /listsuppliers")
+@command("/listsuppliers", description="Вывести список поставщиков.")
 def handle_list_suppliers(text):
     try:
         suppliers = list_suppliers()
@@ -72,7 +72,7 @@ def handle_list_suppliers(text):
     except Exception as e:
         return f"Ошибка: {str(e)}"
 
-@command("/listsales", description="Вывести список продаж. Пример: /listsales") 
+@command("/listsales", description="Вывести список продаж.")
 def handle_list_sales(text):
     try:
         sales = list_sales()
@@ -85,8 +85,8 @@ def handle_list_sales(text):
         return response
     except Exception as e:
         return f"Ошибка: {str(e)}"
-    
-@command("/listpositions", description="Вывести список позиций работников. Пример: /listpositions")
+
+@command("/listpositions", description="Вывести список позиций работников.")
 def handle_list_positions(text):
     try:
         positions = list_positions()
